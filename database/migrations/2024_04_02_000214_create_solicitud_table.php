@@ -29,8 +29,8 @@ return new class extends Migration
             $table->boolean('Cancelacion');
             $table->string('Observaciones', 500)->nullable();
             $table->unsignedBigInteger('IdPeriodo');
-            $table->foreign('IdPersonal')->references('IdPersonal')->on('personal');
-            $table->foreign('IdPeriodo')->references('IdPeriodo')->on('periodo');
+            $table->foreign('IdPersonal')->references('IdPersonal')->on('personals');
+            $table->foreign('IdPeriodo')->references('IdPeriodo')->on('periodos');
             $table->timestamps();
         });
     }

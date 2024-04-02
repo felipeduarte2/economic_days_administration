@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('Contrasena', 20);
             $table->unsignedBigInteger('IdDepartamento');
             $table->unsignedBigInteger('IDPuesto');
-            $table->foreign('IdDepartamento')->references('IdDepartamento')->on('departamento');
-            $table->foreign('IDPuesto')->references('IdPuesto')->on('puesto');
+            $table->foreign('IdDepartamento')->references('IdDepartamento')->on('departamentos');
+            $table->foreign('IDPuesto')->references('IdPuesto')->on('puestos');
 
             $table->timestamps();
         });
