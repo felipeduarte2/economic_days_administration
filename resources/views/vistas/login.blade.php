@@ -21,6 +21,8 @@
 
             <input class="botons" type="submit" value="Iniciar Sesión" name="iniciar_sesion">
 
+            <p>¿Haz olvidado tu contraseña?</p>
+
             {{-- <p><a href="registro.php">Registrar</a></p> --}}
         </form>
     </section>
