@@ -2,28 +2,42 @@
 @section('title','Estado Solicitud')
 @section('content')
     <section>
-        <h1>Estado de la solicitud</h1>
-        <form action="" method="POST">
-            <label for="codigo_de_empleado" class="form-label">C&oacute;digo de empleado</label>
-            <input class="controls form-control" type="text" name="codigo_de_empleado" id="codigo_de_empleado" placeholder="Código de empleado">
 
-            <br>
-            <br>
+        <div class="flex justify-center items-center h-screen bg-slate-500">
 
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" name="nombre" class="controls form-control">
+            <div class="w-96 p-6 shadow-mg rounded-md text-black bg-white">
 
-            <br>
-            <br>
+                <div class="text-3xl font-bold mb-2 text-[#1e0e4b] text-center"><h1 class="text-[#2196f3]">Estado</h1></div>
+                
+                <div class="text-mm font-normal mb-4 text-center text-[#1e0e4b]">Estado de la solicitud</div>
 
-            <label for="fecha-solicitado" class="form-label">Fecha solicitada</label> 
-            <input type="date" name="fecha-solicitado" id="fecha-solicitado" class="controls form-control">
+                <form action="" method="POST" class="flex flex-col gap-3">
 
-            <br>
-            <br>
+                    <div class="block relative">
+                        <label class="block text-gray-600 cursor-text text-mm leading-[140%] font-normal mb-2" for="codigo_de_empleado">C&oacute;digo de empleado</label>
+                        <input class="rounded border border-blue-500 text-mm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-blue-500 outline-0" type="text" name="codigo_de_empleado" id="codigo_de_empleado" placeholder="Código de empleado">
+                    </div>
 
-            <label for="Estado" class="form-label">Estado</label>
-            <input type="text" id="Estado" name="Estado" class="controls form-control">
-        </form>
+                    <div class="block relative">
+                        <label for="nombre" class="block text-gray-600 cursor-text text-mm leading-[140%] font-normal mb-2">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="rounded border border-blue-500 text-mm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-blue-500 outline-0">
+                    </div>
+
+                    <div class="block relative">
+                        <label for="fecha_solicitado" class="block text-gray-600 cursor-text text-mm leading-[140%] font-normal mb-2">Fecha solicitada</label>
+                        <input type="date" name="fecha_solicitado" id="fecha_solicitado" class="rounded border border-blue-500 text-mm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-blue-500 outline-0">
+                    </div>
+
+                    <div class="grid grid-cols-2 items-center">
+                        <button type="submit" class="bg-[#2196f3] w-max m-auto px-6 py-2 rounded text-white text-mm font-normal">Aceptar</button>
+                        <button type="reset" class="bg-[#2196f3] w-max m-auto px-6 py-2 rounded text-white text-mm font-normal">Cancelar</button>
+                    </div>
+                
+                </form>
+
+
+            </div>
+
+        </div>
     </section>
 @endsection()
