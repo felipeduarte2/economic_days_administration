@@ -1,23 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ViewsController;
 
-
-Route::get('/', HomeController::class);
-
-Route::controller(ViewsController::class)->group(function(){
-    Route::get('user','index')->name( 'index' );  //    
-    Route::get('login','login')->name( 'login' );  // 
-    Route::get('registro','registro')->name( 'registro' );  //
-    Route::get('solicitud','solicitud')->name( 'solicitud' );  // 
-    Route::get('vistasolicitud','vistasolicitud')->name( 'vistasolicitud' );  // 
-    Route::get('estadosolicitud','estadosolicitud')->name( 'estadosolicitud' );  // 
-    // Route::get('cursos/create','create');
-    // Route::get('cursos/{curso}','show');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
