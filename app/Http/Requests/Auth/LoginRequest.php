@@ -31,7 +31,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'Codigo_empleado' => ['required', 'digits:6'],
+            // 'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,21 +43,44 @@ class LoginRequest extends FormRequest
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    // funcion para autenticar al usuario y redireccionar a la vista de dashboard
+    /**
+     * Intente autenticar al usuario utilizando las credenciales proporcionadas.
+     *
+     * Si la autenticación es exitosa, el usuario será redirigido al destino previsto. Si hay un
+     * error durante la autenticación, el usuario será redirigido nuevamente a la vista de inicio de sesión con los errores.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function authenticate(): void
     {
+        /**
+         * Asegúrar de que el usuario no tenga una tarifa limitada.
+         */
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        /**
+         * Intentar autenticar al usuario utilizando las credenciales proporcionadas.
+         */
+        if (! Auth::attempt($this->only('Codigo_empleado', 'password'), $this->boolean('remember'))) {
+            /**
+             * Si la autenticación falla, incremente los intentos de inicio de sesión para este usuario.
+             */
             RateLimiter::hit($this->throttleKey());
 
+            /**
+             * Lanza una ValidationException con el mensaje de inicio de sesión fallido.
+             */
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'Codigo_empleado' => trans('auth.failed'),
             ]);
         }
 
+        /**
+         * Si el usuario está autenticado, borre los intentos de inicio de sesión de este usuario.
+         */
         RateLimiter::clear($this->throttleKey());
     }
+
 
     /**
      * Asegúrara de que la solicitud de inicio de sesión no tenga una tarifa limitada.
@@ -64,32 +88,55 @@ class LoginRequest extends FormRequest
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    // Funcion para controlar el limite de intentos de inicio de sesion
+    /**
+     * Verificar si la solicitud de inicio de sesión no tiene una tarifa limitada.
+     *
+     * Verificar si la solicitud de inicio de sesión no ha excedido el límite de intentos permitidos.
+     * Si el límite de intentos se ha excedido, se lanza una ValidationException con el mensaje
+     * de error correspondiente.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function ensureIsNotRateLimited(): void
     {
+        // Verificar si el límite de intentos se ha excedido
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
+        // Disparar el evento de bloqueo
         event(new Lockout($this));
 
+        // Obtener la cantidad de segundos restantes hasta que el límite de intentos se resetee
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
+        // Lanzar una ValidationException con el mensaje de error correspondiente
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'Codigo_empleado' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
         ]);
     }
 
+
     /**
      * Obtener la clave de aceleración de limitación de velocidad para la solicitud.
      */
 
-    // Funcion para obtener la clave de limite de intentos de inicio de sesion
+    /**
+     * Obtener la clave de limite de intentos de inicio de sesión.
+     *
+     * La clave se obtiene combinando la dirección de correo electrónico del usuario
+     * con la dirección IP desde la que se está intentando iniciar sesión.
+     *
+     * @return string
+     */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate( // Transliterar caracteres especiales
+            Str::lower($this->string('Codigo_empleado')) // Convertir a minúsculas
+            . '|' . $this->ip() // Agregar la dirección IP
+        );
     }
 }
