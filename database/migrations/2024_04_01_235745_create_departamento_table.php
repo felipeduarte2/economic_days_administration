@@ -36,6 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         // Si la tabla 'departamento' existe, será eliminada.
-        Schema::dropIfExists('departamento');
+        Schema::dropIfExists('departamentos');
     }
 };

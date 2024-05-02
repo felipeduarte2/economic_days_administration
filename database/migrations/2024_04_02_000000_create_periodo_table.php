@@ -44,6 +44,6 @@ return new class extends Migration
     public function down(): void
     {
         // Si la tabla 'periodo' existe, será eliminada.
-        Schema::dropIfExists('periodo');
+        Schema::dropIfExists('periodos');
     }
 };

@@ -41,6 +41,6 @@ return new class extends Migration
     public function down(): void
     {
         // Si la tabla 'solicitud' existe, será eliminada.
-        Schema::dropIfExists('solicitud');
+        Schema::dropIfExists('solicituds');
     }
 };
