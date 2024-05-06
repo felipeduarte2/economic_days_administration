@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
 
         $Periodo = new Periodo();
         $Periodo->descripcion = 'Primer Periodo';
@@ -30,8 +30,26 @@ class DatabaseSeeder extends Seeder
         $Periodo->save();
 
         $Departamento = new Departamento();
-        $Departamento->descripcion = 'Sistemas';
+        $Departamento->descripcion = 'Ingeniria en Sistemas';; 
         $Departamento->save();
+
+        $Departamento2 = new Departamento();
+        $Departamento2->descripcion = 'Ingeniria en Getion';
+        $Departamento2->save();
+
+        $Departamento3 = new Departamento();
+        $Departamento3->descripcion = 'Ingeniria en Bioqimica';
+        $Departamento3->save();
+
+        $Departamento4 = new Departamento();
+        $Departamento4->descripcion = 'Ingeniria Civil';
+        $Departamento4->save();
+
+        // $Departamento5 = new Departamento();
+        // $Departamento5->descripcion = 'Ingeniria ';
+        // $Departamento5->save();
+
+
 
         // $Periodo->descripcion = 'Segundo Periodo';
         // $Periodo->fecha_inicio = '2022-07-01';
@@ -40,9 +58,17 @@ class DatabaseSeeder extends Seeder
 
         $Puesto = new Puesto();
         $Puesto->descripcion = 'Administrador';
-        $Puesto->Validacion1= false;
-        $Puesto->Validacion2= false;
-        $Puesto->Validacion3= false;
+        // $Puesto->Validacion1= false;
+        // $Puesto->Validacion2= false;
+        // $Puesto->Validacion3= false;
         $Puesto->save();
+
+        $Puesto2 = new Puesto();
+        $Puesto2->descripcion = 'Docente';
+        $Puesto2->save();
+
+        // $Puesto3 = new Puesto();
+        // $Puesto3->descripcion = 'Jefe';
+        // $Puesto3->save();
     }
 }

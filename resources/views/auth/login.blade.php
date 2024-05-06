@@ -5,7 +5,7 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        {{-- Codigo_empleado --}}
+        {{-- Codigo_empleado --}} 
         <div>
             <x-input-label for="Codigo_empleado">Codigo del empleado </x-input-label>
             <x-text-input id="Codigo_empleado" class="block mt-1 w-full" type="text" name="Codigo_empleado" :value="old('Codigo_empleado')" required autocomplete="username" />

@@ -29,9 +29,9 @@ return new class extends Migration
             $table->string('Descripcion', 40);
 
             //las comumnas 'validacio1', 'validacion2' y 'validacion3' almacenan booleanos, por lo tanto pueden tener los val
-            $table->boolean('Validacion1');
-            $table->boolean('Validacion2');
-            $table->boolean('Validacion3');
+            // $table->boolean('Validacion1');
+            // $table->boolean('Validacion2');
+            // $table->boolean('Validacion3');
 
             // Las columnas 'created_at' y 'updated_at' almacenan los timestamps de cuando se creó o actualizó el registro.
             $table->timestamps();

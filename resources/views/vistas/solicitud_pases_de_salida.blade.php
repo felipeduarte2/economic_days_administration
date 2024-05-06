@@ -8,12 +8,11 @@
     <div class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                {{-- {{ $slot }} --}} 
                 <div class="py-12">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                             <div class="max-w-xl">
-                                <form action="" method="post">
+                                <form method="POST" action="{{ route('solicitud_p') }}">
                                     @csrf
 
                                     {{-- Motivo --}}
@@ -49,9 +48,8 @@
                                             {{ __('Solicitar') }}
                                         </x-primary-button>
 
-                                        <x-primary-button class="ml-4">
-                                            {{ __('Cancelar') }}
-                                        </x-primary-button>
+                                        <a class="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" 
+                                        href="{{ route('dashboard') }}">{{ __('Cancelar') }}</a>
                                     </div>
 
                                 </form>
@@ -62,17 +60,4 @@
             </div>
         </div>
     </div>
-
-    {{-- <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    prueba
-                    <form action="" method="post">
-                        @csrf
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 </x-app-layout>

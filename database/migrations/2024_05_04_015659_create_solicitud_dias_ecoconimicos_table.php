@@ -4,30 +4,28 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// Esta migración crea la tabla 'solicitud' en la base de datos.
-
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations. 
      */
     public function up(): void
     {
-        Schema::create('solicituds', function (Blueprint $table) {
-            $table->id('IdSolicitud');
+        Schema::create('solicitud_dias_ecoconimicos', function (Blueprint $table) {
+            $table->id();
             $table->string('Motivo', 100);
             $table->dateTime('FechaSolicitud');
             $table->dateTime('FechaSolicitada');
-            $table->unsignedBigInteger('user_id');
-            $table->boolean('Validacion1');
-            $table->boolean('Validacion2');
-            $table->boolean('Validacion3');
+            $table->boolean('Validacion1')->nullable();
+            $table->boolean('Validacion2')->nullable();
+            $table->boolean('Validacion3')->nullable();
             $table->dateTime('FechaValida1')->nullable();
             $table->dateTime('FechaValida2')->nullable();
             $table->dateTime('FechaValida3')->nullable();
-            $table->boolean('Aprolondo');
-            $table->boolean('Cancelacion');
+            $table->boolean('Aprobacion')->nullable();
+            $table->boolean('Cancelacion')->nullable();
             $table->string('Observaciones', 500)->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('IdPeriodo');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('IdPeriodo')->references('IdPeriodo')->on('periodos');
@@ -40,7 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Si la tabla 'solicitud' existe, será eliminada.
-        Schema::dropIfExists('solicituds');
+        Schema::dropIfExists('solicitud_dias_ecoconimicos');
     }
 };

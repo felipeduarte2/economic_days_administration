@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ViewsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,4 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::controller(ViewsController::class)->group(function(){
+    Route::get('/solicitud','solicitud')->middleware(['auth', 'verified'])->name( 'solicitud' );
+});
 require __DIR__.'/auth.php';
