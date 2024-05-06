@@ -3,8 +3,9 @@
 @section('title','login')
 
 @section('content')
+
     <section>
-        <div class="flex justify-center items-center h-screen bg-slate-500">
+        <div class="flex justify-center items-center h-screen bg-red-500 bg-blue-500">
 
             <div class="w-96 p-6 shadow-mg rounded-md text-black bg-white">
 
