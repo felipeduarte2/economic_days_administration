@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Departamento extends Model
 {
     use HasFactory;
+
+    protected $table = "departamentos";
+
+    //relacion uno a muchos
+    public function users(){
+        return $this->hasMany(User::class, 'IdDepartamento','id');
+    }
 }

@@ -70,5 +70,16 @@ class DatabaseSeeder extends Seeder
         // $Puesto3 = new Puesto();
         // $Puesto3->descripcion = 'Jefe';
         // $Puesto3->save();
+
+        $Usuario = new User();
+        $Usuario->Nombre = 'Felipe';
+        $Usuario->ApellidoP = 'Duarte';
+        $Usuario->ApellidoM = 'Castillo';
+        $Usuario->Codigo_empleado = '000000';
+        $Usuario->password = bcrypt('12345678');
+        $Usuario->email = "test@example.com";
+        $Usuario->IdDepartamento = 1;
+        $Usuario->IdPuesto = 1;
+        $Usuario->save();
     }
 }

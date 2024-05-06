@@ -19,27 +19,27 @@
 
         {{-- Codigo_empleado --}}
         <div>
-            <x-input-label for="Codigo_empleado" :value="__('Codigo_empleado')" />
+            <x-input-label for="Codigo_empleado"> Codigo De Empleado </x-input-label>
             <x-text-input id="Codigo_empleado" name="Codigo_empleado" type="text" class="mt-1 block w-full" :value="old('Codigo_empleado', $user->Codigo_empleado)" required autocomplete="name" />
         </div>
 
         {{-- Nombre --}}
         <div>
-            <x-input-label for="Nombre" :value="__('Nombre')" />
+            <x-input-label for="Nombre"> Nombre </x-input-label>
             <x-text-input id="Nombre" name="Nombre" type="text" class="mt-1 block w-full" :value="old('Nombre', $user->Nombre)" required autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('Nombre')" />
         </div>
 
         {{-- ApellidoP --}}
         <div>
-            <x-input-label for="ApellidoP" :value="__('ApellidoP')" />
+            <x-input-label for="ApellidoP"> Apellido Paterno </x-input-label>
             <x-text-input id="ApellidoP" name="ApellidoP" type="text" class="mt-1 block w-full" :value="old('ApellidoP', $user->ApellidoP)" required autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('ApellidoP')" />
         </div>
 
         {{-- ApellidoM --}}
         <div>
-            <x-input-label for="ApellidoM" :value="__('ApellidoM')" />
+            <x-input-label for="ApellidoM"> Apellido Materno </x-input-label>
             <x-text-input id="ApellidoM" name="ApellidoM" type="text" class="mt-1 block w-full" :value="old('ApellidoM', $user->ApellidoM)" required autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('ApellidoM')" />
         </div>

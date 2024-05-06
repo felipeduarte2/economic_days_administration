@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        //$middleware->add('App\Http\Middleware\ExampleMiddleware');
+        $middleware->alias([
+            'admin' => App\Http\Middleware\Administrador::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

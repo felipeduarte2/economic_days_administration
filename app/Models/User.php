@@ -53,6 +53,14 @@ class User extends Authenticatable
         ];
     }
 
+    public function departamento(){
+        return $this->belongsTo(Departamento::class, 'IdDepartamento', 'IdDepartamento');
+    }
+
+    public function puesto(){
+        return $this->belongsTo(Puesto::class, 'IDPuesto', 'IdPuesto');
+    }
+
     // protected function name(): Attribute
     // {
     //     return new Attributes(

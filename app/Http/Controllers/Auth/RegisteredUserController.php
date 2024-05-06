@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
     {
         // Validamos el formulario 
         $request->validate([
-            'Codigo_empleado' => ['required', 'digits:6', 'unique:'.User::class],
+            'Codigo_empleado' => ['required', 'string', 'max:10', 'unique:'.User::class],
             'Nombre' => ['required', 'string', 'max:255'],
             'ApellidoP' => ['required', 'string', 'max:255'],
             'ApellidoM' => ['required', 'string', 'max:255'],
@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         // Logueamos al usuario
-        Auth::login($user);
+        //Auth::login($user);
 
         // Redireccionamos a la vista de dashboard
         return redirect(route('dashboard', absolute: false));
