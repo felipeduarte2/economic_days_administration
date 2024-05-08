@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->unsignedBigInteger('IdDepartamento')->nullable();
-            $table->unsignedBigInteger('IDPuesto')->nullable();
+            $table->unsignedBigInteger('IdPuesto')->nullable();
             $table->foreign('IdDepartamento')->references('IdDepartamento')->on('departamentos')->onDelete('set null');
-            $table->foreign('IDPuesto')->references('IdPuesto')->on('puestos')->onDelete('set null');
+            $table->foreign('IdPuesto')->references('IdPuesto')->on('puestos')->onDelete('set null');
             //
         });
     }
@@ -28,10 +28,10 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            // $table->dropForeign(['IdDepartamento']);
-            // $table->dropForeign(['IDPuesto']);
-            // $table->dropColumn(['IdDepartamento', 'IDPuesto']);
-            //
+            $table->dropForeign(['IdDepartamento']);
+            $table->dropForeign(['IdPuesto']);
+            $table->dropColumn(['IdDepartamento', 'IDPuesto']);
+            
         });
     }
 };

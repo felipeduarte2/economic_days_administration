@@ -58,7 +58,7 @@ class User extends Authenticatable
     }
 
     public function puesto(){
-        return $this->belongsTo(Puesto::class, 'IDPuesto', 'IdPuesto');
+        return $this->belongsTo(Puesto::class, 'IdPuesto', 'IdPuesto');
     }
 
     // protected function name(): Attribute
