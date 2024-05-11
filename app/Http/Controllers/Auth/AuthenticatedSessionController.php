@@ -32,7 +32,36 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        //redireccionar a la vista de dashboard
+
+        // Docente
+        if($request->user()->puesto->Descripcion === 'Docente'){
+            return redirect()->intended(route('docente.dashboard', absolute: false));
+        }
+
+        // Cordinador
+        elseif($request->user()->puesto->Descripcion === 'Cordinador'){
+            return redirect()->intended(route('cordinador.dashboard', absolute: false));
+        }
+
+        // Administrador
+        elseif($request->user()->puesto->Descripcion === 'Administrador'){
+            return redirect()->intended(route('administrador.dashboard', absolute: false));
+        }
+
+        // Director
+        elseif($request->user()->puesto->Descripcion === 'Director'){
+            return redirect()->intended(route('director.dashboard', absolute: false));
+        }
+
+        // SubDirector
+        elseif($request->user()->puesto->Descripcion === 'SubDirector'){
+            return redirect()->intended(route('subdirector.dashboard', absolute: false));
+        }
+
+        else{
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
     }
 
     /**
@@ -48,6 +77,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

@@ -5,16 +5,64 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a 
+                        @if(Auth::user()->puesto->Descripcion == 'Docente')
+                            href="{{ route('docente.dashboard') }}"
+                        @elseif(Auth::user()->puesto->Descripcion == 'Cordinador')
+                            href="{{ route('cordinador.dashboard') }}"
+                        @elseif(Auth::user()->puesto->Descripcion == 'Administrador')
+                            href="{{ route('administrador.dashboard') }}"
+                        @elseif(Auth::user()->puesto->Descripcion == 'Director')
+                            href="{{ route('director.dashboard') }}"
+                        @elseif(Auth::user()->puesto->Descripcion == 'SubDirector')
+                            href="{{ route('subdirector.dashboard') }}"
+                        @endif
+                    >
+                    {{-- href="{{ route('dashboard') }}"> --}}
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
+
+                    {{-- Docente --}}
+                    @if(Auth::user()->puesto->Descripcion == 'Docente')
+                        <x-nav-link :href="route('docente.dashboard')" :active="request()->routeIs('docente.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- Cordinador --}}
+                    @if(Auth::user()->puesto->Descripcion == 'Cordinador')
+                        <x-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- Administrador --}}
+                    @if(Auth::user()->puesto->Descripcion == 'Administrador')
+                        <x-nav-link :href="route('administrador.dashboard')" :active="request()->routeIs('administrador.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- Director --}}
+                    @if(Auth::user()->puesto->Descripcion == 'Director')
+                        <x-nav-link :href="route('director.dashboard')" :active="request()->routeIs('director.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- SubDirector --}}
+                    @if(Auth::user()->puesto->Descripcion == 'SubDirector')
+                        <x-nav-link :href="route('subdirector.dashboard')" :active="request()->routeIs('subdirector.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -67,9 +115,39 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            {{-- <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
+            {{-- Docente --}}
+            @if(Auth::user()->puesto->Descripcion == 'Docente')
+                <x-responsive-nav-link :href="route('docente.dashboard')" :active="request()->routeIs('docente.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
+            {{-- Cordinador --}}
+            @if(Auth::user()->puesto->Descripcion == 'Cordinador')
+                <x-responsive-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
+            {{-- Administrador --}}
+            @if(Auth::user()->puesto->Descripcion == 'Administrador')
+                <x-responsive-nav-link :href="route('administrador.dashboard')" :active="request()->routeIs('administrador.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
+            {{-- Director --}}
+            @if(Auth::user()->puesto->Descripcion == 'Director')
+                <x-responsive-nav-link :href="route('director.dashboard')" :active="request()->routeIs('director.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
+            {{-- SubDirector --}}
+            @if(Auth::user()->puesto->Descripcion == 'SubDirector')
+                <x-responsive-nav-link :href="route('subdirector.dashboard')" :active="request()->routeIs('subdirector.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
