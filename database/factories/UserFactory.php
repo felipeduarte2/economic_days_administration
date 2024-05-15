@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'Codigo_empleado' => fake()->unique()->randomNumber(10, true),
+            'Codigo_empleado' => fake()->unique()->randomNumber(6, true),
             'Nombre' => fake()->firstName(),
             'ApellidoP' => fake()->lastName(),
             'ApellidoM' => fake()->lastName(),

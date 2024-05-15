@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\SolicitudD;
+use App\Models\SolicitudP;
 use App\Models\User;
+use GuzzleHttp\Promise\Create;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -30,15 +33,10 @@ class DatabaseSeeder extends Seeder
             'IdPuesto' => 1,
         ]);
 
-        // $Usuario = new User();
-        // $Usuario->Nombre = 'Felipe';
-        // $Usuario->ApellidoP = 'Duarte';
-        // $Usuario->ApellidoM = 'Castillo';
-        // $Usuario->Codigo_empleado = '000000';
-        // $Usuario->password = bcrypt('12345678');
-        // $Usuario->email = "test@example.com";
-        // $Usuario->IdDepartamento = 1;
-        // $Usuario->IdPuesto = 1;
-        // $Usuario->save();
+        User::factory(50)->Create();
+
+        SolicitudD::factory(100)->Create();
+
+        SolicitudP::factory(100)->Create();
     }
 }

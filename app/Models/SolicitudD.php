@@ -15,10 +15,17 @@ class SolicitudD extends Model
         'Motivo',
         'FechaSolicitud',
         'FechaSolicitada',
+        'Validacion1',
+        'Validacion2',
+        'Validacion3',
+        'FechaValida1',
+        'FechaValida2',
+        'FechaValida3',
+        'Aprobacion',
+        'Cancelacion',
         'Observaciones',
         'user_id',
         'IdPeriodo',
     ];
 
-    
 }
