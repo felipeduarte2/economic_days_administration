@@ -25,7 +25,7 @@ class RegisteredUserController extends Controller
     {
         $puestos = Puesto::all();
         $departamentos = Departamento::all();
-        return view('auth.register', compact('puestos', 'departamentos'));
+        return view('administrador.register', compact('puestos', 'departamentos'));
         //return view('auth.register');
     }
 
@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             'ApellidoM' => ['required', 'string', 'max:255'],
             // 'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         // Creamos el usuario
@@ -57,7 +57,8 @@ class RegisteredUserController extends Controller
             'ApellidoM' => $request->ApellidoM,
             // 'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            // 'password' => Hash::make($request->password),
+            'password' => bcrypt($request->input('000000')),
             'IdDepartamento' => $request->IdDepartamento,
             'IdPuesto' => $request->IdPuesto,
         ]);

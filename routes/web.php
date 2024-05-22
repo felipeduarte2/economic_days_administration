@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Backend\AdministradorController;
 use App\Http\Controllers\Backend\CordinadorController;
 use App\Http\Controllers\Backend\DirectorController;
@@ -31,6 +32,11 @@ require __DIR__.'/auth.php';
 // Rutas de administrador
 Route::middleware(['auth','admin'])->group(function () {
     Route::get('/administrador.dashboard',[AdministradorController::class, 'dashboard'])->name('administrador.dashboard');
+    Route::get('/administrador/register', [AdministradorController::class, 'create'])->name('register');
+    Route::post('/administrador/register', [AdministradorController::class, 'store'])->name('register');
+    // Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::get('/administrador/edit/{user}', [AdministradorController::class, 'edit'])->name('administrador.edit');
+    Route::put('/administrador/edit/{user}', [AdministradorController::class, 'update'])->name('administrador.update');
 });
 
 //Rutas de director
