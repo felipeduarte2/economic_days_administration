@@ -34,7 +34,6 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::get('/administrador.dashboard',[AdministradorController::class, 'dashboard'])->name('administrador.dashboard');
     Route::get('/administrador/register', [AdministradorController::class, 'create'])->name('register');
     Route::post('/administrador/register', [AdministradorController::class, 'store'])->name('register');
-    // Route::post('register', [RegisteredUserController::class, 'store']);
     Route::get('/administrador/edit/{user}', [AdministradorController::class, 'edit'])->name('administrador.edit');
     Route::put('/administrador/edit/{user}', [AdministradorController::class, 'update'])->name('administrador.update');
 });
@@ -55,7 +54,9 @@ Route::middleware(['auth','docente'])->group(function () {
     Route::get('/docente/solicitud_dias_ecoconimicos', [DocenteController::class, 'create_solicitud_d'])->name('docente.solicitud_dias_ecoconimicos');
     Route::post('/docente/solicitud_dias_ecoconimicos', [DocenteController::class, 'store_solicitud_d'])->name('docente.solicitud_dias_ecoconimicos');
     Route::get('/docente/solicitud_pases_salida', [DocenteController::class, 'create_solicitud_p'])->name('docente.solicitud_pases_salida');
-    Route::post('/docente/solicitud_pases_salida', [DocenteController::class, 'store_solicitud_p'])->name('docente.solicitud_pases_salida');
+    Route::get('/docente/detalles_d/{solicitud}', [DocenteController::class, 'create_detalles_solicitud_d'])->name('docente.detalles_solicitud_d');
+    Route::get('/docente/detalles_p/{solicitud}', [DocenteController::class, 'create_detalles_solicitud_p'])->name('docente.detalles_solicitud_p');
+    
 });
 
 //Rutas de cordinador
