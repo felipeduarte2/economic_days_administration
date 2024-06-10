@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="flex justify-center">
+    <div class="flex justify-center py-12">
         <div>
             <a href=" {{ route('login') }} "
                 class="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisteredUserController;
+// use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Backend\AdministradorController;
 use App\Http\Controllers\Backend\CordinadorController;
 use App\Http\Controllers\Backend\DirectorController;
@@ -52,6 +52,10 @@ Route::middleware(['auth','subdirector'])->group(function () {
 //Rutas de docente
 Route::middleware(['auth','docente'])->group(function () {
     Route::get('/docente.dashboard',[DocenteController::class, 'dashboard'])->name('docente.dashboard');
+    Route::get('/docente/solicitud_dias_ecoconimicos', [DocenteController::class, 'create_solicitud_d'])->name('docente.solicitud_dias_ecoconimicos');
+    Route::post('/docente/solicitud_dias_ecoconimicos', [DocenteController::class, 'store_solicitud_d'])->name('docente.solicitud_dias_ecoconimicos');
+    Route::get('/docente/solicitud_pases_salida', [DocenteController::class, 'create_solicitud_p'])->name('docente.solicitud_pases_salida');
+    Route::post('/docente/solicitud_pases_salida', [DocenteController::class, 'store_solicitud_p'])->name('docente.solicitud_pases_salida');
 });
 
 //Rutas de cordinador

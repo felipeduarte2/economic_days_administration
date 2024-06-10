@@ -8,6 +8,7 @@ use App\Models\Puesto;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -45,7 +46,9 @@ class AdministradorController extends Controller
             'ApellidoP' => $request->input('ApellidoP'),
             'ApellidoM' => $request->input('ApellidoM'),
             'email' => $request->input('email'),
-            'password' => bcrypt($request->input('000000')),
+            //'password' => bcrypt($request->input('000000')),
+            // 'password' => Hash::make($request->password),
+            'password' => Hash::make('000000'),
             'IdDepartamento' => $request->IdDepartamento,
             'IdPuesto' => $request->IdPuesto,
         ]);

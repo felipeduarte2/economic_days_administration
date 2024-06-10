@@ -20,7 +20,7 @@
         {{-- Codigo_empleado --}}
         <div>
             <x-input-label for="Codigo_empleado"> Codigo De Empleado </x-input-label>
-            <x-text-input id="Codigo_empleado" name="Codigo_empleado" type="text" class="mt-1 block w-full" :value="old('Codigo_empleado', $user->Codigo_empleado)" required autocomplete="name" />
+            <x-text-input id="Codigo_empleado" name="Codigo_empleado" type="text" class="mt-1 block w-full" :value="old('Codigo_empleado', $user->Codigo_empleado)" required autocomplete="name" readonly/>
         </div>
 
         {{-- Nombre --}}
