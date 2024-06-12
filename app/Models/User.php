@@ -25,6 +25,7 @@ class User extends Authenticatable
         'ApellidoM',
         'email',
         'password',
+        'status',
         'IdDepartamento',
         'IdPuesto',
     ];

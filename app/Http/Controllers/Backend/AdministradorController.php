@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Departamento;
 use App\Models\Puesto;
 use App\Models\User;
+use App\Rules\CordinadorRule;
+use App\Rules\DirectorRule;
+use App\Rules\SubDirectorRule;
+// use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +20,9 @@ class AdministradorController extends Controller
 {
     //
     public function dashboard(){
-        $users = User::all();
+        // user en orden del mas reciente
+        $users = User::orderBy('created_at', 'desc')->get();
+        // $users = User::all();
         return view('administrador.dashboard', compact('users'));
     }
 
@@ -31,13 +37,18 @@ class AdministradorController extends Controller
     public function store(Request $request): RedirectResponse
     {
          // Validamos el formulario 
-
         $request->validate([
             'Codigo_empleado' => ['required', 'string', 'max:10', 'unique:'.User::class],
             'Nombre' => ['required', 'string', 'max:255'],
             'ApellidoP' => ['required', 'string', 'max:255'],
             'ApellidoM' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+
+            // 'email' => Rule::unique('users')->where(fn (Builder $query) => $query->where('account_id', 1)),
+            // en la tabla users solo puede haber un resgistro con el  IdPuesto 2 3 y 4 cuando su status sea Activo
+            //'IdDepartamento' => ['required', Rule::in([1, 2, 3, 4])],
+            'IdPuesto' => ['required', new DirectorRule, new SubDirectorRule],
+            'IdDepartamento' => ['required', new CordinadorRule],
         ]);
 
         $user = User::create([
@@ -46,8 +57,7 @@ class AdministradorController extends Controller
             'ApellidoP' => $request->input('ApellidoP'),
             'ApellidoM' => $request->input('ApellidoM'),
             'email' => $request->input('email'),
-            //'password' => bcrypt($request->input('000000')),
-            // 'password' => Hash::make($request->password),
+            'status' => 'Activo',
             'password' => Hash::make('000000'),
             'IdDepartamento' => $request->IdDepartamento,
             'IdPuesto' => $request->IdPuesto,

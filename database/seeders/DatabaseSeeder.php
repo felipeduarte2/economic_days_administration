@@ -22,6 +22,13 @@ class DatabaseSeeder extends Seeder
         $this->call(PuestossSeeder::class);
         $this->call(PeriodosSeeder::class);
 
+
+        User::factory(50)->Create();
+
+        SolicitudD::factory(100)->Create();
+
+        SolicitudP::factory(100)->Create();
+
         DB::table('users')->insert([
             'Nombre' => 'Felipe',
             'ApellidoP' => 'Duarte',
@@ -29,14 +36,9 @@ class DatabaseSeeder extends Seeder
             'Codigo_empleado' => '000000',
             'email' => 'test@example.com',
             'password' => bcrypt('12345678'),
+            'status' => 'Activo',
             'IdDepartamento' => 1,
             'IdPuesto' => 1,
         ]);
-
-        User::factory(50)->Create();
-
-        SolicitudD::factory(100)->Create();
-
-        SolicitudP::factory(100)->Create();
     }
 }

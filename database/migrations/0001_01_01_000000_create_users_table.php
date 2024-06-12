@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('ApellidoP', 20);
             $table->string('ApellidoM', 20);
 
+            // columna status que solo admite activo o inactivo
+            $table->enum('status', ['Activo', 'Inactivo']);
+            // $table->string('status', 10);
+
             $table->rememberToken();
             $table->timestamps();
         });
