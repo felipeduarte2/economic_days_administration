@@ -28,4 +28,14 @@ class SolicitudP extends Model
         'user_id',
         'IdPeriodo',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function periodo()
+    {
+        return $this->belongsTo(Periodo::class, 'IdPeriodo', 'IdPeriodo');
+    }
 }
