@@ -20,9 +20,9 @@ class AdministradorController extends Controller
 {
     //
     public function dashboard(){
-        // user en orden del mas reciente
-        $users = User::orderBy('created_at', 'desc')->get();
-        // $users = User::all();
+        // user en orden del mas reciente paginado de 5
+        $users = User::orderBy('created_at', 'desc')->paginate(5);
+        // $users = User::orderBy('created_at', 'desc')->get();
         return view('administrador.dashboard', compact('users'));
     }
 
@@ -43,10 +43,6 @@ class AdministradorController extends Controller
             'ApellidoP' => ['required', 'string', 'max:255'],
             'ApellidoM' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-
-            // 'email' => Rule::unique('users')->where(fn (Builder $query) => $query->where('account_id', 1)),
-            // en la tabla users solo puede haber un resgistro con el  IdPuesto 2 3 y 4 cuando su status sea Activo
-            //'IdDepartamento' => ['required', Rule::in([1, 2, 3, 4])],
             'IdPuesto' => ['required', new DirectorRule, new SubDirectorRule],
             'IdDepartamento' => ['required', new CordinadorRule],
         ]);
@@ -71,11 +67,6 @@ class AdministradorController extends Controller
     }  
     
 
-    // public function destroy(User $user){
-    //     $user->delete();
-    //     return redirect(route('administrador.dashboard'));
-    // }
-
     public function edit(User $user){
         $puestos = Puesto::all();
         $departamentos = Departamento::all();
@@ -90,7 +81,10 @@ class AdministradorController extends Controller
             'Nombre' => ['required', 'string', 'max:255'],
             'ApellidoP' => ['required', 'string', 'max:255'],
             'ApellidoM' => ['required', 'string', 'max:255'],
+            'status' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'IdPuesto' => ['required', new DirectorRule, new SubDirectorRule],
+            'IdDepartamento' => ['required', new CordinadorRule],
         ]);
 
         if ($request->user()->isDirty('email')) {
@@ -102,4 +96,5 @@ class AdministradorController extends Controller
         $departamentos = Departamento::all();
         return redirect(route('administrador.dashboard', compact('puestos', 'departamentos'), absolute: false));
     }
+
 }
