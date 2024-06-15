@@ -41,9 +41,15 @@ Route::middleware(['auth','admin'])->group(function () {
 //Rutas de director
 Route::middleware(['auth','director'])->group(function () {
     Route::get('/director.dashboard',[DirectorController::class, 'dashboard'])->name('director.dashboard');
+    // 
     Route::get('/director/detalles_d/{solicitud}', [DirectorController::class, 'create_detalles_solicitud_d'])->name('director.detalles_solicitud_d');
     Route::get('/director/detalles_p/{solicitud}', [DirectorController::class, 'create_detalles_solicitud_p'])->name('director.detalles_solicitud_p');
-
+    // 
+    Route::put('/director/detalles_d/accept/{solicitud}', [DirectorController::class, 'update_accept_solicitud_d'])->name('director.detalles_solicitud_d.accept');
+    Route::put('/director/detalles_d/reject/{solicitud}', [DirectorController::class, 'update_reject_solicitud_d'])->name('director.detalles_solicitud_d.reject');
+    // 
+    Route::put('/director/detalles_p/accept/{solicitud}', [DirectorController::class, 'update_accept_solicitud_p'])->name('director.detalles_solicitud_p.accept');
+    Route::put('/director/detalles_p/reject/{solicitud}', [DirectorController::class, 'update_reject_solicitud_p'])->name('director.detalles_solicitud_p.reject');
 });
 
 //Rutas de subdirector

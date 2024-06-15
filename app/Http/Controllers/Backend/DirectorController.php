@@ -25,16 +25,28 @@ class DirectorController extends Controller
         // return view('director.detalles_solicitud_dias_ecoconimicos');
     }
 
-    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request):RedirectResponse
+    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request)//:RedirectResponse
     {
+        // cambiamos validacion1 por true
+        $solicitud->Validacion1 = true;
+
+        // guardamos en la base de datos Validacion1
+        $solicitud->save(); 
+
+        // redirecionamos a dashboard
         return redirect()->route('director.dashboard');
     }
 
     public function update_reject_solicitud_d(SolicitudD $solicitud, Request $request):RedirectResponse
     {
-        $solicitudes_p = SolicitudP::orderBy('created_at', 'desc')->paginate(8);
-        $solicitudes_d = SolicitudD::orderBy('created_at', 'desc')->paginate(8);
-        return redirect()->route('director.dashboard', compact('solicitudes_p', 'solicitudes_d'));
+        // cambiamos validacion1 por false
+        $solicitud->Validacion1 = false;
+
+        // guardamos en la base de datos Validacion1
+        $solicitud->save();
+
+        // redirecionamos a dashboard
+        return redirect()->route('director.dashboard');
     }
 
     public function create_detalles_solicitud_p(SolicitudP $solicitud): View
@@ -45,11 +57,25 @@ class DirectorController extends Controller
 
     public function update_accept_solicitud_p(SolicitudP $solicitud, Request $request):RedirectResponse
     {
+        // cambiamos validacion1 por true
+        $solicitud->Validacion1 = true;
+
+        // guardamos en la base de datos Validacion1
+        $solicitud->save();
+
+        // redirecionamos a dashboard
         return redirect()->route('director.dashboard');
     }
 
     public function update_reject_solicitud_p(SolicitudP $solicitud, Request $request):RedirectResponse
     {
+        // cambiamos validacion1 por false
+        $solicitud->Validacion1 = false;
+
+        // guardamos en la base de datos Validacion1
+        $solicitud->save();
+
+        // redirecionamos a dashboard
         return redirect()->route('director.dashboard');
     }
 }
