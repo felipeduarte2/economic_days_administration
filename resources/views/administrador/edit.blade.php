@@ -12,7 +12,7 @@
                     
                             <!-- Codigo_empleado -->
                             <div>
-                                <x-input-label for="Codigo_empleado">Codigo de Emplado</x-input-label>
+                                <x-input-label for="Codigo_empleado">Codigo de Empleado</x-input-label>
                                 <x-text-input id="Codigo_empleado" class="block mt-1 w-full" type="text" name="Codigo_empleado" :value="old('Codigo_empleado', $user->Codigo_empleado)" autofocus/>
                                 <x-input-error :messages="$errors->get('Codigo_empleado')" class="mt-2" />
                             </div>
