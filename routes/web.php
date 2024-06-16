@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
 Route::controller(ViewsController::class)->group(function(){
     Route::get('/solicitud','solicitud')->middleware(['auth', 'verified'])->name( 'solicitud' );
 });
+
 require __DIR__.'/auth.php';
 
 // Rutas de administrador
@@ -80,4 +81,13 @@ Route::middleware(['auth','docente'])->group(function () {
 //Rutas de cordinador
 Route::middleware(['auth','cordinador'])->group(function () {
     Route::get('/cordinador.dashboard',[CordinadorController::class, 'dashboard'])->name('cordinador.dashboard');
+    // 
+    Route::get('/cordinador/detalles_d/{solicitud}', [CordinadorController::class, 'create_detalles_solicitud_d'])->name('cordinador.detalles_solicitud_d');
+    Route::get('/cordinador/detalles_p/{solicitud}', [CordinadorController::class, 'create_detalles_solicitud_p'])->name('cordinador.detalles_solicitud_p');
+    //
+    Route::put('/cordinador/detalles_d/accept/{solicitud}', [CordinadorController::class, 'update_accept_solicitud_d'])->name('cordinador.detalles_solicitud_d.accept');
+    Route::put('/cordinador/detalles_d/reject/{solicitud}', [CordinadorController::class, 'update_reject_solicitud_d'])->name('cordinador.detalles_solicitud_d.reject');
+    // 
+    Route::put('/cordinador/detalles_p/accept/{solicitud}', [CordinadorController::class, 'update_accept_solicitud_p'])->name('cordinador.detalles_solicitud_p.accept');
+    Route::put('/cordinador/detalles_p/reject/{solicitud}', [CordinadorController::class, 'update_reject_solicitud_p'])->name('cordinador.detalles_solicitud_p.reject');
 });
