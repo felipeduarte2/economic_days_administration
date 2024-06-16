@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
 use App\Models\User;
-use GuzzleHttp\Promise\Create;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -23,11 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PeriodosSeeder::class);
 
 
-        User::factory(50)->Create();
+        User::factory(35)->Create();
 
-        SolicitudD::factory(100)->Create();
+        SolicitudD::factory(30)->Create();
 
-        SolicitudP::factory(100)->Create();
+        SolicitudP::factory(30)->Create();
 
         DB::table('users')->insert([
             'Nombre' => 'Felipe',

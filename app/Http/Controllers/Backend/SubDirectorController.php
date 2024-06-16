@@ -12,10 +12,11 @@ use Illuminate\Http\RedirectResponse;
 class SubDirectorController extends Controller
 {
     //
-    public function dashboard(){
-        // Todas las solicitudes_p y solicitudes_d que se pagine por 8 registros y ordenar por el mas reciente primero
-        $solicitudes_p = SolicitudP::orderBy('created_at', 'desc')->paginate(8);
-        $solicitudes_d = SolicitudD::orderBy('created_at', 'desc')->paginate(8);
+    public function dashboard(): View
+    {
+        // Todas las solicitudes_p y solicitudes_d que se pagine por 5 registros y ordenar por el mas reciente primero
+        $solicitudes_p = SolicitudP::orderBy('created_at', 'desc')->paginate(5);
+        $solicitudes_d = SolicitudD::orderBy('created_at', 'desc')->paginate(5);
         return view('subdirector.dashboard', compact('solicitudes_p', 'solicitudes_d'));
     }
 
@@ -24,7 +25,7 @@ class SubDirectorController extends Controller
         return view('subdirector.detalles_solicitud_dias_ecoconimicos', compact('solicitud'));
     }
 
-    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request)//:RedirectResponse
+    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request):RedirectResponse
     {
         // cambiamos validacion2 por true
         $solicitud->Validacion2 = true;

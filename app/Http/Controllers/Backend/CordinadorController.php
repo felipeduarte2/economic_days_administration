@@ -12,8 +12,8 @@ use Illuminate\View\View;
 class CordinadorController extends Controller
 {
     //
-    public function dashboard(){
-
+    public function dashboard(): View
+    {
         // traer todas las solicitudes_p cuando el user->departamento->IdDepartamento de las solicitudes_p sean igual al auth()->user()->departamento->id
         $solicitudes_p = SolicitudP::whereHas('user', function($query){
             $query->where('IdDepartamento', auth()->user()->IdDepartamento);
@@ -25,16 +25,14 @@ class CordinadorController extends Controller
         })->latest()->paginate(8);
 
         return view('cordinador.dashboard', compact('solicitudes_p', 'solicitudes_d'));
-
     }
 
     public function create_detalles_solicitud_d(SolicitudD $solicitud): View
     {
         return view('cordinador.detalles_solicitud_dias_ecoconimicos', compact('solicitud'));
-        // return view('director.detalles_solicitud_dias_ecoconimicos');
     }
 
-    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request)//:RedirectResponse
+    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request):RedirectResponse
     {
         // cambiamos validacion3 por true
         $solicitud->Validacion3 = true;
@@ -61,7 +59,6 @@ class CordinadorController extends Controller
     public function create_detalles_solicitud_p(SolicitudP $solicitud): View
     {
         return view('cordinador.detalles_solicitud_pases_de_salida', compact('solicitud'));
-        // return view('director.detalles_solicitud_pases_de_salida');
     }
 
     public function update_accept_solicitud_p(SolicitudP $solicitud, Request $request):RedirectResponse

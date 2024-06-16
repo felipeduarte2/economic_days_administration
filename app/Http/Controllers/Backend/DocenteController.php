@@ -12,13 +12,12 @@ use Illuminate\View\View;
 class DocenteController extends Controller
 {
     //
-    public function dashboard(){
-
+    public function dashboard(): View
+    {
         //Todas las solicitudes where user_id sea igual al del usuario
         $solicitudes_p = SolicitudP::where('user_id', auth()->user()->id)->get();
         $solicitudes_d = SolicitudD::where('user_id', auth()->user()->id)->get();
         return view('docente.dashboard', compact('solicitudes_d', 'solicitudes_p'));
-        // return view('docente.dashboard');
     }
 
     // Solicitud de permisos de dias economicos 
@@ -46,8 +45,7 @@ class DocenteController extends Controller
 
         $solicitud->save();
 
-        return redirect(route('docente.dashboard'));
-
+        return redirect()->route('docente.dashboard');
     }
 
     // Solicitud de pases de salida
@@ -77,20 +75,17 @@ class DocenteController extends Controller
 
         $solicitud->save();
 
-        return redirect(route('docente.dashboard'));
-
+        return redirect()->route('docente.dashboard');
     }
 
     public function create_detalles_solicitud_d(SolicitudD $solicitud): View
     {
         return view('docente.detalles_solicitud_dias_ecoconimicos', compact('solicitud'));
-        // return view('docente.detalles_solicitud_dias_ecoconimicos');
     }
 
     public function create_detalles_solicitud_p(SolicitudP $solicitud): View
     {
         return view('docente.detalles_solicitud_pases_de_salida', compact('solicitud'));
-        // return view('docente.detalles_solicitud_pases_de_salida');
     }
 
 }

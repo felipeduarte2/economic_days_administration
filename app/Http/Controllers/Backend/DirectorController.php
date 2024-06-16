@@ -12,20 +12,20 @@ use Illuminate\Http\Request;
 class DirectorController extends Controller
 {
     //
-    public function dashboard(){
-        // Todas las solicitudes_p y solicitudes_d que se pagine por 8 registros y ordenar por el mas reciente primero
-        $solicitudes_p = SolicitudP::orderBy('created_at', 'desc')->paginate(8);
-        $solicitudes_d = SolicitudD::orderBy('created_at', 'desc')->paginate(8);
+    public function dashboard(): View
+    {
+        // Todas las solicitudes_p y solicitudes_d que se pagine por 5 registros y ordenar por el mas reciente primero
+        $solicitudes_p = SolicitudP::orderBy('created_at', 'desc')->paginate(5);
+        $solicitudes_d = SolicitudD::orderBy('created_at', 'desc')->paginate(5);
         return view('director.dashboard', compact('solicitudes_p', 'solicitudes_d'));
     }
 
     public function create_detalles_solicitud_d(SolicitudD $solicitud): View
     {
         return view('director.detalles_solicitud_dias_ecoconimicos', compact('solicitud'));
-        // return view('director.detalles_solicitud_dias_ecoconimicos');
     }
 
-    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request)//:RedirectResponse
+    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request):RedirectResponse
     {
         // cambiamos validacion1 por true
         $solicitud->Validacion1 = true;
@@ -52,7 +52,6 @@ class DirectorController extends Controller
     public function create_detalles_solicitud_p(SolicitudP $solicitud): View
     {
         return view('director.detalles_solicitud_pases_de_salida', compact('solicitud'));
-        // return view('director.detalles_solicitud_pases_de_salida');
     }
 
     public function update_accept_solicitud_p(SolicitudP $solicitud, Request $request):RedirectResponse

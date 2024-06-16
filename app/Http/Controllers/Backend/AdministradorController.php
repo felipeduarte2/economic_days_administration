@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Rules\CordinadorRule;
 use App\Rules\DirectorRule;
 use App\Rules\SubDirectorRule;
-// use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +18,8 @@ use Illuminate\View\View;
 class AdministradorController extends Controller
 {
     //
-    public function dashboard(){
+    public function dashboard(): View
+    {
         // user en orden del mas reciente paginado de 5
         $users = User::orderBy('created_at', 'desc')->paginate(5);
         // $users = User::orderBy('created_at', 'desc')->get();
@@ -61,13 +61,12 @@ class AdministradorController extends Controller
 
         $user->save();
 
-        $puestos = Puesto::all();
-        $departamentos = Departamento::all();
-        return redirect(route('administrador.dashboard', compact('puestos', 'departamentos'), absolute: false));    
+        return redirect()->route('administrador.dashboard');
     }  
     
 
-    public function edit(User $user){
+    public function edit(User $user): View
+    {
         $puestos = Puesto::all();
         $departamentos = Departamento::all();
         return view('administrador.edit', compact('puestos', 'departamentos', 'user'));
@@ -92,9 +91,8 @@ class AdministradorController extends Controller
         }
 
         $user->update($request->all());
-        $puestos = Puesto::all();
-        $departamentos = Departamento::all();
-        return redirect(route('administrador.dashboard', compact('puestos', 'departamentos'), absolute: false));
+
+        return redirect()->route('administrador.dashboard');
     }
 
 }
