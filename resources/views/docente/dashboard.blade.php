@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Solicitudes') }}
         </h2>
     </x-slot>
 
@@ -17,29 +17,22 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
                         {{-- Solicitar Permiso dias economicos --}}
-                        <a 
+                        {{-- <a 
                         class="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" 
                         href="{{ route('docente.solicitud_dias_ecoconimicos') }} "
-                        >Solicitar Permiso dias economicos</a>
+                        >Solicitar Permiso dias economicos</a> --}}
 
                         {{-- Solicitar Permiso pases de salida --}}
-                        <a 
+                        {{-- <a 
                         class="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" 
                         href="{{ route('docente.solicitud_pases_salida') }} "
-                        >Solicitar Permiso pases de salida</a>
+                        >Solicitar Permiso pases de salida</a> --}}
 
                     </div><br>
 
-                    {{-- si $solicitudes_d o esta vacia --}}
-                    @if (count($solicitudes_d) == 0 && count($solicitudes_p) == 0)
-                        <div class="text-center">
-                            No tiene solicitudes pendientes
-                        </div>
-                    @endif
-
                     {{-- Tabla de Solicitudes dias economicos --}}
-                    @if (count($solicitudes_d) > 0)
                     Solicitudes dias economicos
+                    @if (count($solicitudes_d) > 0)
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -70,14 +63,14 @@
                     </div>
                     @else
                         <div class="text-center">
-                            Sin solicitudes
+                            No tiene solicitudes pendientes
                         </div>
                     @endif
                     <br><br>
 
                     {{-- Tabla de Solicitudes pases de salida --}}
-                    @if (count($solicitudes_p) > 0)
                     Solicitudes Pases de salida
+                    @if (count($solicitudes_p) > 0)
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -107,7 +100,7 @@
                     </div>
                     @else
                         <div class="text-center">
-                            Sin solicitudes
+                            No tiene solicitudes pendientes
                         </div>
                     @endif
 

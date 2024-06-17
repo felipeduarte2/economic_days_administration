@@ -17,12 +17,12 @@ class CordinadorController extends Controller
         // traer todas las solicitudes_p cuando el user->departamento->IdDepartamento de las solicitudes_p sean igual al auth()->user()->departamento->id
         $solicitudes_p = SolicitudP::whereHas('user', function($query){
             $query->where('IdDepartamento', auth()->user()->IdDepartamento);
-        })->latest()->paginate(8);
+        })->latest()->paginate(5);
 
         // 
         $solicitudes_d = SolicitudD::whereHas('user', function($query){
             $query->where('IdDepartamento', auth()->user()->IdDepartamento);
-        })->latest()->paginate(8);
+        })->latest()->paginate(5);
 
         return view('cordinador.dashboard', compact('solicitudes_p', 'solicitudes_d'));
     }
@@ -37,6 +37,13 @@ class CordinadorController extends Controller
         // cambiamos validacion3 por true
         $solicitud->Validacion3 = true;
 
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
+
         // guardamos en la base de datos Validacion3
         $solicitud->save(); 
 
@@ -48,6 +55,13 @@ class CordinadorController extends Controller
     {
         // cambiamos validacion3 por false
         $solicitud->Validacion3 = false;
+
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
 
         // guardamos en la base de datos Validacion3
         $solicitud->save();
@@ -66,6 +80,13 @@ class CordinadorController extends Controller
         // cambiamos validacion3 por true
         $solicitud->Validacion3 = true;
 
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
+
         // guardamos en la base de datos Validacion3
         $solicitud->save();
 
@@ -77,6 +98,13 @@ class CordinadorController extends Controller
     {
         // cambiamos validacion3 por false
         $solicitud->Validacion3 = false;
+
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
 
         // guardamos en la base de datos Validacion3
         $solicitud->save();

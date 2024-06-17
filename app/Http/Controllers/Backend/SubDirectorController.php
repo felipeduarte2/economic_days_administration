@@ -30,6 +30,13 @@ class SubDirectorController extends Controller
         // cambiamos validacion2 por true
         $solicitud->Validacion2 = true;
 
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
+
         // guardamos en la base de datos Validacion2
         $solicitud->save(); 
 
@@ -41,6 +48,13 @@ class SubDirectorController extends Controller
     {
         // cambiamos validacion2 por false
         $solicitud->Validacion2 = false;
+
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
 
         // guardamos en la base de datos Validacion2
         $solicitud->save();
@@ -59,6 +73,13 @@ class SubDirectorController extends Controller
         // cambiamos validacion2 por true
         $solicitud->Validacion2 = true;
 
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
+
         // guardamos en la base de datos Validacion2
         $solicitud->save();
 
@@ -70,6 +91,13 @@ class SubDirectorController extends Controller
     {
         // cambiamos validacion2 por false
         $solicitud->Validacion2 = false;
+
+        // si $solicitud->Validacion1 y 2 es true
+        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+            $solicitud->Aprobacion = true;
+        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+            $solicitud->Aprobacion = false;
+        }else { $solicitud->Aprobacion = null;}
 
         // guardamos en la base de datos Validacion2
         $solicitud->save();

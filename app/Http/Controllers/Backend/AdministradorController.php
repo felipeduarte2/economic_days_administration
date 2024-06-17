@@ -20,8 +20,10 @@ class AdministradorController extends Controller
     //
     public function dashboard(): View
     {
-        // user en orden del mas reciente paginado de 5
-        $users = User::orderBy('created_at', 'desc')->paginate(5);
+        // user en orden del mas reciente paginado de 5, no mostrar el auth()->user
+;
+        $users = User::where('id', '!=', auth()->user()->id)->latest()->paginate(5);
+        // $users = User::orderBy('created_at', 'desc')->paginate(5);
         // $users = User::orderBy('created_at', 'desc')->get();
         return view('administrador.dashboard', compact('users'));
     }

@@ -1,5 +1,11 @@
 <x-app-layout>
 
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Ingresar nuevo usuario') }}
+        </h2>
+    </x-slot>
+
     <div class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
@@ -48,7 +54,10 @@
                                 <x-input-label for="IdPuesto"  >Puesto</x-input-label>
                                 <x-select id="IdPuesto" name="IdPuesto" class="block mt-1 w-full" required>
                                     @foreach ($puestos as $puesto)
-                                        <option value="{{ $puesto->IdPuesto }}">{{ $puesto->Descripcion }}</option>
+                                        <option 
+                                        {{-- si $departamento->Descripcion es Docente poner selected --}}
+                                        {{ $puesto->Descripcion == 'Docente' ? 'selected' : '' }}
+                                        value="{{ $puesto->IdPuesto }}">{{ $puesto->Descripcion }}</option>
                                     @endforeach
                                 </x-select>
                                 <x-input-error :messages="$errors->get('IdPuesto')" class="mt-2" />

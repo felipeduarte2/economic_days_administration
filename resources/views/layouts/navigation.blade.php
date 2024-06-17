@@ -3,6 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
+
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a 
@@ -31,36 +32,54 @@
 
                     {{-- Docente --}}
                     @if(Auth::user()->puesto->Descripcion == 'Docente')
+
+                        {{-- Solicitudes --}}
                         <x-nav-link :href="route('docente.dashboard')" :active="request()->routeIs('docente.dashboard')">
-                            {{ __('Dashboard') }}
+                            {{ __('Solicitudes') }}
                         </x-nav-link>
+
+                        {{-- Solicitar Permiso dias economicos --}}
+                        <x-nav-link :href="route('docente.solicitud_dias_ecoconimicos')" :active="request()->routeIs('docente.solicitud_dias_ecoconimicos')">
+                            {{ __('Dias Economicos') }}
+                        </x-nav-link>
+
+                        {{-- Solicitar Permiso pases de salida --}}
+                        <x-nav-link :href="route('docente.solicitud_pases_salida')" :active="request()->routeIs('docente.solicitud_pases_salida')">
+                        {{ __('Pases de Salida') }}
+                        </x-nav-link>
+
                     @endif
 
                     {{-- Cordinador --}}
                     @if(Auth::user()->puesto->Descripcion == 'Cordinador')
                         <x-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
-                            {{ __('Dashboard') }}
+                            {{ __('Solicitudes') }}
                         </x-nav-link>
                     @endif
 
                     {{-- Administrador --}}
                     @if(Auth::user()->puesto->Descripcion == 'Administrador')
+
                         <x-nav-link :href="route('administrador.dashboard')" :active="request()->routeIs('administrador.dashboard')">
-                            {{ __('Dashboard') }}
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                            {{ __('Nuevo Usuario') }}
                         </x-nav-link>
                     @endif
 
                     {{-- Director --}}
                     @if(Auth::user()->puesto->Descripcion == 'Director')
                         <x-nav-link :href="route('director.dashboard')" :active="request()->routeIs('director.dashboard')">
-                            {{ __('Dashboard') }}
+                            {{ __('Solicitudes') }}
                         </x-nav-link>
                     @endif
 
                     {{-- SubDirector --}}
                     @if(Auth::user()->puesto->Descripcion == 'SubDirector')
                         <x-nav-link :href="route('subdirector.dashboard')" :active="request()->routeIs('subdirector.dashboard')">
-                            {{ __('Dashboard') }}
+                            {{ __('Solicitudes') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -118,34 +137,53 @@
             {{-- <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link> --}}
+
             {{-- Docente --}}
             @if(Auth::user()->puesto->Descripcion == 'Docente')
+
+                {{-- Solicitudes --}}
                 <x-responsive-nav-link :href="route('docente.dashboard')" :active="request()->routeIs('docente.dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Solicitudes') }}
+                </x-responsive-nav-link>
+
+                {{-- Solicitar Permiso dias economicos --}}
+                <x-responsive-nav-link :href="route('docente.solicitud_dias_ecoconimicos')" :active="request()->routeIs('docente.solicitud_dias_ecoconimicos')">
+                    {{ __('Dias Economicos') }}
+                </x-responsive-nav-link>
+
+                {{-- Solicitar Permiso pases de salida --}}
+                <x-responsive-nav-link :href="route('docente.solicitud_pases_salida')" :active="request()->routeIs('docente.solicitud_pases_salida')">
+                    {{ __('Pases de Salida') }}
                 </x-responsive-nav-link>
             @endif
+
             {{-- Cordinador --}}
             @if(Auth::user()->puesto->Descripcion == 'Cordinador')
                 <x-responsive-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Solicitudes') }}
                 </x-responsive-nav-link>
             @endif
             {{-- Administrador --}}
             @if(Auth::user()->puesto->Descripcion == 'Administrador')
+
                 <x-responsive-nav-link :href="route('administrador.dashboard')" :active="request()->routeIs('administrador.dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Usuarios') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('Nuevo Usuario') }}
                 </x-responsive-nav-link>
             @endif
             {{-- Director --}}
             @if(Auth::user()->puesto->Descripcion == 'Director')
                 <x-responsive-nav-link :href="route('director.dashboard')" :active="request()->routeIs('director.dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Solicitudes') }}
                 </x-responsive-nav-link>
             @endif
             {{-- SubDirector --}}
             @if(Auth::user()->puesto->Descripcion == 'SubDirector')
                 <x-responsive-nav-link :href="route('subdirector.dashboard')" :active="request()->routeIs('subdirector.dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Solicitudes') }}
                 </x-responsive-nav-link>
             @endif
         </div>
