@@ -46,12 +46,12 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="py-4 px-1 text-center">Director</td>
                                     <td class="py-4 px-1 text-center">
-                                        @if($solicitud->Validacion1 == 1)
-                                            Aceptado
-                                        @elseif($solicitud->Validacion1 == 0)
-                                            Rechazado
-                                        @elseif($solicitud->Validacion1 == null)
+                                        @if($solicitud->Validacion1 === null)
                                             Pendiente
+                                        @elseif($solicitud->Validacion1 == true)
+                                            Aceptado
+                                        @elseif($solicitud->Validacion1 == false)
+                                            Rechazado
                                         @endif
                                     </td>
                                 </tr>
@@ -59,12 +59,12 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="py-4 px-1 text-center">SubDirector</td>
                                     <td class="py-4 px-1 text-center">
-                                        @if($solicitud->Validacion2 == 1)
-                                            Aceptado
-                                        @elseif($solicitud->Validacion2 == 0)
-                                            Rechazado
-                                        @elseif($solicitud->Validacion2 == null)
+                                        @if($solicitud->Validacion2 === null)
                                             Pendiente
+                                        @elseif($solicitud->Validacion2 == true)
+                                            Aceptado
+                                        @elseif($solicitud->Validacion2 == false)
+                                            Rechazado
                                         @endif
                                     </td>
                                 </tr>
@@ -72,12 +72,12 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="py-4 px-1 text-center">Cordinador</td>
                                     <td class="py-4 px-1 text-center">
-                                        @if($solicitud->Validacion3 == 1)
-                                            Aceptado
-                                        @elseif($solicitud->Validacion3 == 0)
-                                            Rechazado
-                                        @elseif($solicitud->Validacion3 == null)
+                                        @if($solicitud->Validacion3 === null)
                                             Pendiente
+                                        @elseif($solicitud->Validacion3 == true)
+                                            Aceptado
+                                        @elseif($solicitud->Validacion3 == false)
+                                            Rechazado
                                         @endif
                                     </td>
                                 </tr>
