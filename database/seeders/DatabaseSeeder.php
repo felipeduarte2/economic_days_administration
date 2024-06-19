@@ -22,11 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PeriodosSeeder::class);
 
 
-        User::factory(35)->Create();
+        User::factory(15)->Create();
 
-        SolicitudD::factory(30)->Create();
+        SolicitudD::factory(10)->Create();
 
-        SolicitudP::factory(30)->Create();
+        SolicitudP::factory(10)->Create();
 
         DB::table('users')->insert([
             'Nombre' => 'Felipe',
