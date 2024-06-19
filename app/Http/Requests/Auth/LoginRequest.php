@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'Codigo_empleado' => ['required', 'string', 'max:10'],
-            // 'email' => ['required', 'string', 'email'],
+            'status' => ['required', 'string', 'in:Activo'],
             'password' => ['required', 'string'],
         ];
     }
@@ -61,7 +61,7 @@ class LoginRequest extends FormRequest
         /**
          * Intentar autenticar al usuario utilizando las credenciales proporcionadas.
          */
-        if (! Auth::attempt($this->only('Codigo_empleado', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('Codigo_empleado', 'password', 'status'), $this->boolean('remember'))) {
             /**
              * Si la autenticación falla, incremente los intentos de inicio de sesión para este usuario.
              */

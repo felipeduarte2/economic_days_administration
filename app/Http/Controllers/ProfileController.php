@@ -56,7 +56,12 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->delete();
+        // $user->delete();
+        // no borrar usuario solo poner $user->status en inactivo
+
+        $user->status = 'Inactivo';
+
+        $user->save();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

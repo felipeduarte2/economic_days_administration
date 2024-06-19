@@ -8,7 +8,7 @@
         {{-- Codigo_empleado --}} 
         <div>
             <x-input-label for="Codigo_empleado">Codigo del empleado </x-input-label>
-            <x-text-input id="Codigo_empleado" class="block mt-1 w-full" type="text" name="Codigo_empleado" :value="old('Codigo_empleado')" required autocomplete="username" />
+            <x-text-input id="Codigo_empleado" class="block mt-1 w-full" type="text" name="Codigo_empleado" :value="old('Codigo_empleado')" autocomplete="username" />
             <x-input-error :messages="$errors->get('Codigo_empleado')" class="mt-2" />
         </div>
 
@@ -26,7 +26,7 @@
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
-                            required autocomplete="current-password" />
+                            autocomplete="current-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -38,6 +38,9 @@
                 <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
         </div>
+
+        {{-- status tipo hiden --}}
+        <input type="hidden" name="status" value="Activo">
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
