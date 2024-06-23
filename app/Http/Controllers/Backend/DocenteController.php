@@ -3,66 +3,149 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Periodo;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
+use App\Rules\PermisosPorDiaRule;
+use App\Rules\PermisosPorPeriodoRule;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class DocenteController extends Controller
 {
-    //
+
+    /**
+     * Mostrar el tablero del docente.
+     *
+     * @return \Illuminate\View\View
+     */
     public function dashboard(): View
     {
-        //Todas las solicitudes where user_id sea igual al del usuario
+        // Obtenga todas las solicitudes donde el user_id es igual al id del usuario autenticado
         $solicitudes_p = SolicitudP::where('user_id', auth()->user()->id)->get();
         $solicitudes_d = SolicitudD::where('user_id', auth()->user()->id)->get();
-        return view('docente.dashboard', compact('solicitudes_d', 'solicitudes_p'));
+
+        // Devuelve la vista docente.dashboard con las variables solicitudes_d y solicitudes_p
+        return view(
+            'docente.dashboard',
+            compact('solicitudes_d', 'solicitudes_p')
+        );
     }
 
-    // Solicitud de permisos de dias economicos 
+
+
+    /**
+     * Crea una vista para el formulario de solicitud de días económicos.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create_solicitud_d(): View
     {
+        // Devolver la vista del formulario de solicitud de días económicos
         return view('docente.solicitud_dias_ecoconimicos');
     }
 
+
+
+    /**
+     * Guarda una solicitud de días económicos.
+     *
+     * @param Request $request La solicitud HTTP con los datos de la solicitud.
+     * @return RedirectResponse Redirecciona al tablero del docente.
+     * @throws \Exception Si no se encuentra un período válido para la fecha actual.
+     */
     public function store_solicitud_d(Request $request): RedirectResponse
     {
+        // Valida los datos de la solicitud
         $request->validate([
             'Motivo' => 'required',
-            'Fecha' => 'required',
+            'Fecha' => [
+                'required',
+                new PermisosPorPeriodoRule, // Verifica que el día sea válido para el período actual
+                new PermisosPorDiaRule // Verifica que el día sea válido
+            ],
             // 'Observaciones' => 'required',
         ]);
 
+        // Obtiene la fecha actual
+        $today = Carbon::now()->format('Y-m-d');
+
+        // Obtiene el período actual
+        $periodo = Periodo::where('fecha_inicio', '<=', $today)
+            ->where('fecha_fin', '>=', $today)
+            ->first();
+
+        // Verifica si se encontró un período válido
+        if (!$periodo) {
+            throw new \Exception('No se encontró un período válido para la fecha actual.');
+        }
+
+        // Crea una nueva solicitud de días económicos
         $solicitud = SolicitudD::create([
-            'Motivo' => $request->Motivo,
-            'FechaSolicitud' => date('Y-m-d'),
-            'FechaSolicitada' => $request->Fecha,
-            'Observaciones' => $request->Observaciones,
-            'user_id' => auth()->user()->id,
-            'IdPeriodo' => 1,
+            'Motivo' => $request->Motivo, // Motivo de la solicitud
+            'FechaSolicitud' => date('Y-m-d'), // Fecha de creación de la solicitud
+            'FechaSolicitada' => $request->Fecha, // Fecha solicitada
+            'Observaciones' => $request->Observaciones, // Observación de la solicitud
+            'user_id' => auth()->user()->id, // ID del usuario que creó la solicitud
+            // ID del período actual
+            'IdPeriodo' => $periodo->IdPeriodo,
         ]);
 
+        // Guarda la solicitud en la base de datos
         $solicitud->save();
 
+        // Redirecciona al tablero del docente
         return redirect()->route('docente.dashboard');
     }
 
-    // Solicitud de pases de salida
+
+
+    /**
+     * Crea una vista para el formulario de solicitud de pases de salida.
+     *
+     * @return \Illuminate\View\View La vista del formulario de solicitud de pases de salida.
+     */
     public function create_solicitud_p(): View
     {
+        // Devolver la vista del formulario de solicitud de pases de salida
         return view('docente.solicitud_pases_de_salida');
     }
 
+
+
+    /**
+     * Guarda una solicitud de pases de salida.
+     *
+     * @param Request $request La solicitud HTTP con los datos de la solicitud.
+     * @return RedirectResponse Redirecciona al tablero del docente.
+     * @throws \Exception Si no se encuentra un período válido para la fecha actual.
+     */
     public function store_solicitud_p(Request $request): RedirectResponse
     {
+        // Valida los datos de la solicitud
         $request->validate([
-            'Motivo' => 'required',
-            'Fecha' => 'required',
-            'Hora' => 'required',
-            // 'Observaciones' => 'required',
+            'Motivo' => 'required', // Motivo de la solicitud
+            'Fecha' => 'required', // Fecha solicitada
+            'Hora' => 'required', // Hora solicitada
+            // 'Observaciones' => 'required', // Observación de la solicitud (opcional)
         ]);
 
+        // Obtiene la fecha actual
+        $today = Carbon::now()->format('Y-m-d');
+
+        // Obtiene el período actual
+        $periodo = Periodo::where('fecha_inicio', '<=', $today)
+            ->where('fecha_fin', '>=', $today)
+            ->first();
+
+        // Verifica si se encontró un período válido
+        if (!$periodo) {
+            throw new \Exception('No se encontró un período válido para la fecha actual.');
+        }
+
+        // Crea una nueva solicitud de pases de salida
         $solicitud = SolicitudP::create([
             'Motivo' => $request->Motivo,
             'FechaSolicitud' => date('Y-m-d'),
@@ -70,21 +153,42 @@ class DocenteController extends Controller
             'HoraSolicitada' => $request->Hora,
             'Observaciones' => $request->Observaciones,
             'user_id' => auth()->user()->id,
-            'IdPeriodo' => 1,
+            // ID del período actual
+            'IdPeriodo' => $periodo->IdPeriodo,
         ]);
 
+        // Guarda la solicitud en la base de datos
         $solicitud->save();
 
+        // Redirecciona al tablero del docente
         return redirect()->route('docente.dashboard');
     }
 
+
+
+    /**
+     * Crea una vista para mostrar los detalles de una solicitud de días económicos.
+     *
+     * @param SolicitudD $solicitud La solicitud de días económicos a mostrar.
+     * @return View La vista de los detalles de la solicitud de días económicos.
+     */
     public function create_detalles_solicitud_d(SolicitudD $solicitud): View
     {
+        // Retorna la vista de los detalles de la solicitud de días económicos, pasando la solicitud como variable compact.
         return view('docente.detalles_solicitud_dias_ecoconimicos', compact('solicitud'));
     }
 
+
+
+    /**
+     * Crea una vista para mostrar los detalles de una solicitud de pases de salida.
+     *
+     * @param SolicitudP $solicitud La solicitud de pases de salida a mostrar.
+     * @return View La vista de los detalles de la solicitud de pases de salida.
+     */
     public function create_detalles_solicitud_p(SolicitudP $solicitud): View
     {
+        // Retorna la vista de los detalles de la solicitud de pases de salida, pasando la solicitud como variable compact.
         return view('docente.detalles_solicitud_pases_de_salida', compact('solicitud'));
     }
 
