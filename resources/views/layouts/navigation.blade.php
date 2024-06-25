@@ -81,6 +81,10 @@
                         <x-nav-link :href="route('subdirector.dashboard')" :active="request()->routeIs('subdirector.dashboard')">
                             {{ __('Solicitudes') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('subdirector.create_solicitud_d')" :active="request()->routeIs('subdirector.create_solicitud_d')">
+                            {{ __('Dar Permiso') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -184,6 +188,10 @@
             @if(Auth::user()->puesto->Descripcion == 'SubDirector')
                 <x-responsive-nav-link :href="route('subdirector.dashboard')" :active="request()->routeIs('subdirector.dashboard')">
                     {{ __('Solicitudes') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('subdirector.create_solicitud_d')" :active="request()->routeIs('subdirector.create_solicitud_d')">
+                    {{ __('Dar Permiso') }}
                 </x-responsive-nav-link>
             @endif
         </div>

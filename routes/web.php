@@ -60,6 +60,9 @@ Route::middleware(['auth','subdirector'])->group(function () {
     // 
     Route::put('/subdirector/detalles_p/accept/{solicitud}', [SubDirectorController::class, 'update_accept_solicitud_p'])->name('subdirector.detalles_solicitud_p.accept');
     Route::put('/subdirector/detalles_p/reject/{solicitud}', [SubDirectorController::class, 'update_reject_solicitud_p'])->name('subdirector.detalles_solicitud_p.reject');
+    //
+    Route::get('/subdirector/create_solicitud_d', [SubDirectorController::class, 'create_solicitud_d'])->name('subdirector.create_solicitud_d');
+    Route::post('/subdirector/create_solicitud_d', [SubDirectorController::class, 'store_solicitud_d'])->name('subdirector.create_solicitud_d');
 });
 
 //Rutas de docente
