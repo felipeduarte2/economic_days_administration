@@ -92,4 +92,7 @@ Route::middleware(['auth','cordinador'])->group(function () {
     // 
     Route::put('/cordinador/detalles_p/accept/{solicitud}', [CordinadorController::class, 'update_accept_solicitud_p'])->name('cordinador.detalles_solicitud_p.accept');
     Route::put('/cordinador/detalles_p/reject/{solicitud}', [CordinadorController::class, 'update_reject_solicitud_p'])->name('cordinador.detalles_solicitud_p.reject');
+    // 
+    Route::get('/cordinador/permisos', [CordinadorController::class, 'permisos'])->name('cordinador.permisos');
+    Route::get('/cordinador/permisos/pdf', [CordinadorController::class, 'permisos_pdf'])->name('cordinador.pdf');
 });

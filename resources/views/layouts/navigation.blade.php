@@ -55,6 +55,10 @@
                         <x-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
                             {{ __('Solicitudes') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('cordinador.permisos')" :active="request()->routeIs('cordinador.permisos')">
+                            {{ __('Listado de permisos') }}
+                        </x-nav-link>
                     @endif
 
                     {{-- Administrador --}}
@@ -165,6 +169,10 @@
             @if(Auth::user()->puesto->Descripcion == 'Cordinador')
                 <x-responsive-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
                     {{ __('Solicitudes') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('cordinador.permisos')" :active="request()->routeIs('cordinador.permisos')">
+                    {{ __('Listado de permisos') }}
                 </x-responsive-nav-link>
             @endif
             {{-- Administrador --}}
