@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         //
         //$middleware->add('App\Http\Middleware\ExampleMiddleware');
+        // Alias para los middlewares.
+        // Esto nos permite utilizar 'admin', 'docente', 'subdirector', 'director' y 'cordinador'
+        // en lugar de la clase completa en las rutas y controladores.
         $middleware->alias([
             'admin' => App\Http\Middleware\Administrador::class,
             'docente' => App\Http\Middleware\Docente::class,

@@ -9,8 +9,6 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 // use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-// use App\Http\Controllers\Solicitud_dController;
-// use App\Http\Controllers\Solicitud_pController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -39,14 +37,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    
-    // Route::get('register', [RegisteredUserController::class, 'create'])
-    //             ->middleware('admin')
-    //             ->name('register');
-
-    // Route::post('register', [RegisteredUserController::class, 'store'])
-    //             ->middleware('admin');
-
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
 
@@ -67,10 +57,4 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
-
-    // Route::get('solicitud_dias_economicos',[Solicitud_dController::class, 'create'])->name('solicitud_d');
-    // Route::post('solicitud_dias_economicos',[Solicitud_dController::class, 'store'])->name('solicitud_d');
-
-    // Route::get('solicitud_pases_de_salida',[Solicitud_pController::class, 'create'])->name('solicitud_p');
-    // Route::post('solicitud_pases_de_salida',[Solicitud_pController::class, 'store'])->name('solicitud_p');
 });

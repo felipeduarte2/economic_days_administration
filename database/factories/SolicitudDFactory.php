@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class SolicitudDFactory extends Factory
 {
     /**
-     * Define the model's default state.
+     * Defina el estado predeterminado del modelo.
      *
      * @return array<string, mixed>
      */

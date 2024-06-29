@@ -5,27 +5,27 @@ use Illuminate\Support\Str;
 return [
 
     /*
-    |--------------------------------------------------------------------------
-    | Default Database Connection Name
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Nombre de conexión de base de datos predeterminado
+    |------------------------------------------------- -------------------------
     |
-    | Here you may specify which of the database connections below you wish
-    | to use as your default connection for database operations. This is
-    | the connection which will be utilized unless another connection
-    | is explicitly specified when you execute a query / statement.
+    | Aquí puede especificar cuál de las siguientes conexiones de base de datos desea
+    | para usar como conexión predeterminada para operaciones de bases de datos. Esto es
+    | la conexión que se utilizará a menos que otra conexión
+    | se especifica explícitamente cuando ejecuta una consulta/declaración.
     |
     */
 
     'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
-    |--------------------------------------------------------------------------
-    | Database Connections
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Conexiones de bases de datos
+    |------------------------------------------------- -------------------------
     |
-    | Below are all of the database connections defined for your application.
-    | An example configuration is provided for each database system which
-    | is supported by Laravel. You're free to add / remove connections.
+    | A continuación se muestran todas las conexiones de bases de datos definidas para su aplicación.
+    | Se proporciona una configuración de ejemplo para cada sistema de base de datos que
+    | cuenta con el apoyo de Laravel. Eres libre de agregar o eliminar conexiones.
     |
     */
 
@@ -112,13 +112,13 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Migration Repository Table
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Tabla del repositorio de migración
+    |------------------------------------------------- -------------------------
     |
-    | This table keeps track of all the migrations that have already run for
-    | your application. Using this information, we can determine which of
-    | the migrations on disk haven't actually been run on the database.
+    | Esta tabla realiza un seguimiento de todas las migraciones que ya se han ejecutado durante
+    | su aplicación. Usando esta información, podemos determinar cuál de
+    | las migraciones en disco en realidad no se han ejecutado en la base de datos.
     |
     */
 
@@ -128,16 +128,16 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Redis Databases
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Bases de datos Redis
+    |------------------------------------------------- -------------------------
     |
-    | Redis is an open source, fast, and advanced key-value store that also
-    | provides a richer body of commands than a typical key-value system
-    | such as Memcached. You may define your connection settings here.
+    | Redis es un almacén de claves-valor avanzado, rápido y de código abierto que también
+    | Proporciona un cuerpo de comandos más rico que un sistema típico de clave-valor.
+    | como Memcached. Puede definir la configuración de su conexión aquí.
     |
     */
-
+    
     'redis' => [
 
         'client' => env('REDIS_CLIENT', 'phpredis'),

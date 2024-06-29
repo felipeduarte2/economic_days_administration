@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\Puesto;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
@@ -11,44 +12,66 @@ class DirectorRule implements DataAwareRule, ValidationRule
 {
 
     /**
-     * All of the data under validation.
+     * Todos los datos bajo validación.
      *
      * @var array<string, mixed>
      */
     protected $data = [];
 
 
+
+
+
     /**
-     * Run the validation rule.
+     * Ejecuta la regla de validación.
      *
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param  string  $attribute El nombre del atributo.
+     * @param  mixed  $value El valor del atributo.
+     * @param  \Closure(\Illuminate\Translation\PotentiallyTranslatedString)  $fail Función de fallback.
+     * @return void
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        // Inicializar la variable a null
         $director = null;
 
+        // Consultar el puesto basado en el IdPuesto
+        $puesto = Puesto::where('IdPuesto', $value)->first();
+
+        // Verificar si el atributo id está establecido
         if (isset($this->data['id'])) {
-            $director = User::where('IdPuesto', 2)->where('status', 'Activo')->where('id', '!=', $this->data['id'])->first();
+            // Consultar el usuario con el puesto como director y id diferente al id del usuario actual
+            $director = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Director'))
+            ->where('status', 'Activo')->where('id', '!=', $this->data['id'])->first();
         }else{
-            $director = User::where('IdPuesto', 2)->where('status', 'Activo')->first();
+            // Consultar el usuario con el puesto como director
+            $director = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Director'))
+            ->where('status', 'Activo')->first();
         }
 
-        // si $value es igual a 2 y si exite $director, entonces no puede existir un director
-        if ($value == 2 && $director) {
-            // $fail('Ya existe un director activo');
-            $fail('Ya existe un director');
+        // Verificar si el puesto es director y existe un directorio activo
+        if ($puesto->Descripcion == 'Director' && $director) {
+            // Llamar al fallback y mostrar el mensaje de error
+            $fail('Ya existe un director activo');
         }
     }
+
+
+
+
 
         /**
-     * Set the data under validation.
-     *
-     * @param  array<string, mixed>  $data
-     */
-    public function setData(array $data): static
-    {
-        $this->data = $data;
+         * Establece los datos bajo validación.
+         *
+         * @param  array<string, mixed>  $data Los datos bajo validación.
+         * @return static Devuelve la instancia actual para encadenar llamadas.
+         */
+        public function setData(array $data): static
+        {
+            // Asigna los datos bajo validación al atributo data.
+            $this->data = $data;
 
-        return $this;
-    }
+            // Devuelve la instancia actual para encadenar llamadas.
+            return $this;
+        }
 }

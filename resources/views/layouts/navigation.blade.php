@@ -40,12 +40,12 @@
 
                         {{-- Solicitar Permiso dias economicos --}}
                         <x-nav-link :href="route('docente.solicitud_dias_ecoconimicos')" :active="request()->routeIs('docente.solicitud_dias_ecoconimicos')">
-                            {{ __('Dias Economicos') }}
+                            {{ __('Solicitar Permiso Para Un Dia Economico') }}
                         </x-nav-link>
 
                         {{-- Solicitar Permiso pases de salida --}}
                         <x-nav-link :href="route('docente.solicitud_pases_salida')" :active="request()->routeIs('docente.solicitud_pases_salida')">
-                        {{ __('Pases de Salida') }}
+                        {{ __('Solicitar Permiso Para Un Pase de Salida') }}
                         </x-nav-link>
 
                     @endif
@@ -156,12 +156,12 @@
 
                 {{-- Solicitar Permiso dias economicos --}}
                 <x-responsive-nav-link :href="route('docente.solicitud_dias_ecoconimicos')" :active="request()->routeIs('docente.solicitud_dias_ecoconimicos')">
-                    {{ __('Dias Economicos') }}
+                    {{ __('Solicitar Permiso Para Un Dia Economico') }}
                 </x-responsive-nav-link>
 
                 {{-- Solicitar Permiso pases de salida --}}
                 <x-responsive-nav-link :href="route('docente.solicitud_pases_salida')" :active="request()->routeIs('docente.solicitud_pases_salida')">
-                    {{ __('Pases de Salida') }}
+                    {{ __('Solicitar Permiso Para Un Pase de Salida') }}
                 </x-responsive-nav-link>
             @endif
 

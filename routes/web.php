@@ -95,4 +95,5 @@ Route::middleware(['auth','cordinador'])->group(function () {
     // 
     Route::get('/cordinador/permisos', [CordinadorController::class, 'permisos'])->name('cordinador.permisos');
     Route::get('/cordinador/permisos/pdf', [CordinadorController::class, 'permisos_pdf'])->name('cordinador.pdf');
+    Route::get('/cordinador/permisos/fecha', [CordinadorController::class, 'search'])->name('cordinador.permisos.fecha');
 });

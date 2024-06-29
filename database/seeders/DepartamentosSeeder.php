@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class DepartamentosSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Ejecute las semillas de la base de datos.
      */
     public function run(): void
     {

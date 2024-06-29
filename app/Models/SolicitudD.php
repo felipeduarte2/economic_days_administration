@@ -28,13 +28,31 @@ class SolicitudD extends Model
         'IdPeriodo',
     ];
 
+    /**
+     * Relación uno a muchos con la tabla de usuarios.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
+        // Retorna el usuario que ha realizado la solicitud
         return $this->belongsTo(User::class);
     }
 
+
+
+    /**
+     * Relación uno a muchos con la tabla de periodos.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function periodo()
     {
+        // Esta relación devuelve el período al que pertenece la solicitud de día económico.
+        // Se utiliza el método `belongsTo` de Eloquent para establecer la relación.
+        // El primer parámetro es la clase del modelo al que se relaciona, en este caso `Periodo`.
+        // El segundo parámetro es el nombre de la columna en esta tabla que hace referencia al modelo `Periodo`, en este caso 'IdPeriodo'.
+        // El tercer parámetro es el nombre de la columna en el modelo `Periodo` que hace referencia a esta tabla, en este caso 'IdPeriodo'.
         return $this->belongsTo(Periodo::class, 'IdPeriodo', 'IdPeriodo');
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Periodo;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
+use App\Rules\PeriodoValidoRule;
 use App\Rules\PermisosPorDiaRule;
 use App\Rules\PermisosPorPeriodoRule;
 use Carbon\Carbon;
@@ -24,8 +25,8 @@ class DocenteController extends Controller
     public function dashboard(): View
     {
         // Obtenga todas las solicitudes donde el user_id es igual al id del usuario autenticado
-        $solicitudes_p = SolicitudP::where('user_id', auth()->user()->id)->get();
-        $solicitudes_d = SolicitudD::where('user_id', auth()->user()->id)->get();
+        $solicitudes_p = SolicitudP::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
+        $solicitudes_d = SolicitudD::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
 
         // Devuelve la vista docente.dashboard con las variables solicitudes_d y solicitudes_p
         return view(
@@ -62,25 +63,18 @@ class DocenteController extends Controller
         $request->validate([
             'Motivo' => 'required',
             'Fecha' => [
-                'required',
+                'required','date',
+                'after:' . Carbon::yesterday()->format('Y-m-d'),
                 new PermisosPorPeriodoRule, // Verifica que el día sea válido para el período actual
                 new PermisosPorDiaRule // Verifica que el día sea válido
-            ],
+            ],// Fecha solicitada, la Fecha debe ser despues a partir de hoy
             // 'Observaciones' => 'required',
         ]);
 
-        // Obtiene la fecha actual
-        $today = Carbon::now()->format('Y-m-d');
-
         // Obtiene el período actual
-        $periodo = Periodo::where('fecha_inicio', '<=', $today)
-            ->where('fecha_fin', '>=', $today)
+        $periodo = Periodo::where('fecha_inicio', '<=', $request->Fecha)
+            ->where('fecha_fin', '>=', $request->Fecha)
             ->first();
-
-        // Verifica si se encontró un período válido
-        if (!$periodo) {
-            throw new \Exception('No se encontró un período válido para la fecha actual.');
-        }
 
         // Crea una nueva solicitud de días económicos
         $solicitud = SolicitudD::create([
@@ -89,8 +83,7 @@ class DocenteController extends Controller
             'FechaSolicitada' => $request->Fecha, // Fecha solicitada
             'Observaciones' => $request->Observaciones, // Observación de la solicitud
             'user_id' => auth()->user()->id, // ID del usuario que creó la solicitud
-            // ID del período actual
-            'IdPeriodo' => $periodo->IdPeriodo,
+            'IdPeriodo' => $periodo->IdPeriodo, // ID del período actual
         ]);
 
         // Guarda la solicitud en la base de datos
@@ -127,23 +120,20 @@ class DocenteController extends Controller
         // Valida los datos de la solicitud
         $request->validate([
             'Motivo' => 'required', // Motivo de la solicitud
-            'Fecha' => 'required', // Fecha solicitada
+            'Fecha' => [
+                'required', 'date',
+                'after:' . Carbon::yesterday()->format('Y-m-d'),
+                new PeriodoValidoRule
+            ], // Fecha solicitada, la Fecha debe ser despues a partir de hoy
             'Hora' => 'required', // Hora solicitada
             // 'Observaciones' => 'required', // Observación de la solicitud (opcional)
         ]);
 
-        // Obtiene la fecha actual
-        $today = Carbon::now()->format('Y-m-d');
-
         // Obtiene el período actual
-        $periodo = Periodo::where('fecha_inicio', '<=', $today)
-            ->where('fecha_fin', '>=', $today)
+        $periodo = Periodo::where('fecha_inicio', '<=', $request->Fecha,)
+            ->where('fecha_fin', '>=', $request->Fecha,)
             ->first();
 
-        // Verifica si se encontró un período válido
-        if (!$periodo) {
-            throw new \Exception('No se encontró un período válido para la fecha actual.');
-        }
 
         // Crea una nueva solicitud de pases de salida
         $solicitud = SolicitudP::create([

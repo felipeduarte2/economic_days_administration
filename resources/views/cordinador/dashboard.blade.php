@@ -9,14 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{-- {{ __("You're logged in!") }} --}}
-
-                    {{ 'Bienvenido ' . Auth::user()->Nombre  . ' ' . Auth::user()->ApellidoP }}
-                    Se ha logiado como Cordinador <br><br>
-
 
                     {{-- Tabla de solicitudes $solicitudes_d --}}
-                    <h3 class="text-2xl font-bold">Solicitudes</h3>
+                    <h3 class="text-2xl font-bold">Solicitudes de permisos para dias economicos</h3><br>
                     @if (count($solicitudes_d) > 0)
 
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -45,13 +40,11 @@
                     @else
                     <p>No hay solicitudes</p>
                     @endif
-
-                    {{-- paginacion de $solicitudes_d --}}
-                    <br>{{ $solicitudes_d->links() }} <br>
+                    <br><br>
 
                     
                     {{-- Tabla de solicitudes $solicitudes_p --}}
-                    <h3 class="text-2xl font-bold">Solicitudes</h3>
+                    <h3 class="text-2xl font-bold">Solicitudes de permisos para pases de salida</h3><br>
                     @if (count($solicitudes_p) > 0)
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400">
@@ -82,8 +75,14 @@
                     <p>No hay solicitudes</p>
                     @endif
 
-                    {{-- paginacion de $solicitudes_p --}}
-                    <br>{{ $solicitudes_p->links() }}
+
+                    @if ($solicitudes_d->lastPage() > $solicitudes_p->lastPage())
+                    <br>{{ $solicitudes_d->links() }} <br>
+                    @elseif ($solicitudes_p->lastPage() > $solicitudes_d->lastPage())
+                    <br>{{ $solicitudes_p->links() }} <br>
+                    @else
+                    <br>{{ $solicitudes_d->links() }} <br>
+                    @endif
 
                 </div>
             </div>

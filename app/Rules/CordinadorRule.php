@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\Puesto;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
@@ -11,50 +12,68 @@ class CordinadorRule implements DataAwareRule, ValidationRule
 {
 
     /**
-     * All of the data under validation.
+     * Todos los datos bajo validación.
      *
      * @var array<string, mixed>
      */
     protected $data = [];
 
 
+
+
+
     /**
-     * Run the validation rule.
+     * Ejecuta la regla de validación.
      *
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param  string  $attribute El nombre del atributo.
+     * @param  mixed  $value El valor del atributo.
+     * @param  \Closure(\Illuminate\Translation\PotentiallyTranslatedString)  $fail Función de fallback.
+     * @return void
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        // Inicializar la variable a null
         $cordinador = null;
 
+        // Consultar el puesto basado en el IdPuesto
+        $puesto = Puesto::where('IdPuesto', $this->data['IdPuesto'])->first();
+
+        // Verificar si el atributo id está establecido
         if (isset($this->data['id'])) {
-            $cordinador = User::where('IdPuesto', 4)->where('status', 'Activo')->where('IdDepartamento', $value)->where('id', '!=', $this->data['id'])->first();
+            // Consultar el usuario con el puesto como coordinador, departamento igual al valor de entrada y id diferente al id del usuario actual
+            $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Cordinador'))
+            ->where('status', 'Activo')->where('IdDepartamento', $value)->where('id', '!=', $this->data['id'])->first();
         }else{
-            $cordinador = User::where('IdPuesto', 4)->where('status', 'Activo')->where('IdDepartamento', $value)->first();
+            // Consultar el usuario con el puesto como coordinador y departamento igual al valor de entrada
+            $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Cordinador'))
+            ->where('status', 'Activo')->where('IdDepartamento', $value)->first();
         }
 
-        // Consultar si hay un usuario con el IdPuesto, y estatus Activo y IdDepartamento sea igual a value y que ignore al user con Codigo_empleado igual a data['Codigo_empleado']
-        // $cordinador = User::where('IdPuesto', 4)->where('status', 'Activo')->where('IdDepartamento', $value)->first();
-
-        // si IdPuesto de data es igual a 4 y si exite $cordinador, entonces no puede existir un cordinador
-        if ($this->data['IdPuesto'] == 4 && $cordinador) {
-            // poner $cordinador->departamento->Descripcion en minuscula
+        // Verificar si el puesto es coordinador y existe un coordinador en el departamento
+        if ($puesto->Descripcion == 'Cordinador' && $cordinador) {
+            // Obtener el nombre del departamento en minúsculas
             $departamento = strtolower($cordinador->departamento->Descripcion);
+            // Llamar al fallback y mostrar el mensaje de error
             $fail("Ya existe un coordinador en el departamento de $departamento");
-            // $fail('Ya existe un cordinador en '. $cordinador->departamento->Descripcion );
         }
     }
 
 
+
+
+
     /**
-     * Set the data under validation.
+     * Establece los datos bajo validación.
      *
-     * @param  array<string, mixed>  $data
+     * @param  array<string, mixed>  $data Los datos bajo validación.
+     * @return static Devuelve la instancia actual para encadenar llamadas.
      */
     public function setData(array $data): static
     {
+        // Asigna los datos bajo validación al atributo data.
         $this->data = $data;
 
+        // Devuelve la instancia actual para encadenar llamadas.
         return $this;
     }
 }

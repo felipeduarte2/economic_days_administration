@@ -12,8 +12,12 @@ class PermisosPorDiaRule implements ValidationRule
     /**
      * Ejecuta la regla de validación.
      *
+     * Esta función verifica si hay más de tres solicitudes para la fecha ingresada.
+     * Para ello, se buscan todas las solicitudes con la fecha solicitada en la base de datos.
+     * Si hay más de tres solicitudes, se muestra un mensaje de error.
+     *
      * @param  string  $attribute Nombre del atributo
-     * @param  mixed   $value     Valor del atributo
+     * @param  mixed   $value     Valor del atributo (en formato de fecha)
      * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail Callback para agregar un mensaje de error
      * @return void
      */

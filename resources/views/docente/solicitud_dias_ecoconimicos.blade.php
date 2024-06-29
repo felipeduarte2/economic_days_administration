@@ -17,21 +17,21 @@
                                     {{-- Motivo --}}
                                     <div>
                                         <x-input-label for="Motivo">Motivo</x-input-label>
-                                        <x-text-input id="Motivo" class="block mt-1 w-full" type="text" name="Motivo" :value="old('Motivo')" required autofocus />
+                                        <x-text-input id="Motivo" class="block mt-1 w-full" type="text" name="Motivo" :value="old('Motivo')" autofocus />
                                         <x-input-error class="mt-2" :messages="$errors->get('Motivo')" />
                                     </div>
 
                                     {{-- Fecha solicitada --}}
                                     <div>
                                         <x-input-label for="Fecha"> Fecha Solicitada</x-input-label>
-                                        <x-text-input id="Fecha" class="block mt-1 w-full" type="date" name="Fecha" :value="old('Fecha')" required autofocus />
+                                        <x-text-input id="Fecha" class="block mt-1 w-full" type="date" name="Fecha" :value="old('Fecha')" autofocus />
                                         <x-input-error class="mt-2" :messages="$errors->get('Fecha')" />
                                     </div>
 
                                     {{-- Observaciones --}}
                                     <div>
                                         <x-input-label for="Observaciones">Observaciones</x-input-label>
-                                        <x-text-input id="Observaciones" class="block mt-1 w-full" type="text" name="Observaciones" :value="old('Observaciones')" required autofocus />
+                                        <x-text-input id="Observaciones" class="block mt-1 w-full" type="text" name="Observaciones" :value="old('Observaciones')" autofocus />
                                         <x-input-error class="mt-2" :messages="$errors->get('Observaciones')" />
                                     </div>
 

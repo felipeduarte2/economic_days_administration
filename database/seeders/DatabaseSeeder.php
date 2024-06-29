@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Sembra la base de datos de la aplicación.
      */
     public function run(): void
     {

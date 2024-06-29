@@ -13,32 +13,45 @@ class ConfirmablePasswordController extends Controller
 {
     /**
      * Muestra la vista de confirmación de contraseña.
+     *
+     * @return \Illuminate\View\View La vista de confirmación de contraseña.
      */
-    
-    //funcion para mostrar la vista de confirmar contraseña
+    // Funcion para mostrar la vista de confirmar contraseña
     public function show(): View
     {
+        // Retorna la vista de confirmación de contraseña
         return view('auth.confirm-password');
     }
 
-    /**
-     * Confirme la contraseña del usuario.
-     */
 
-    //funcion para confirmar la contraseña del usuario y redireccionar a la vista de dashboard
+
+
+
+    /**
+     * Confirma la contraseña del usuario.
+     *
+     * @param \Illuminate\Http\Request $request La solicitud HTTP.
+     * @return \Illuminate\Http\RedirectResponse La respuesta de redireccionamiento.
+     * @throws \Illuminate\Validation\ValidationException Si la contraseña no es válida.
+     */
+    // Función para confirmar la contraseña del usuario y redireccionar a la vista de dashboard
     public function store(Request $request): RedirectResponse
     {
+        // Verifica si la contraseña del usuario es válida
         if (! Auth::guard('web')->validate([
-            'email' => $request->user()->email,
-            'password' => $request->password,
+            'email' => $request->user()->email, // Obtiene el email del usuario
+            'password' => $request->password, // Obtiene la contraseña proporcionada por el usuario
         ])) {
+            // Si la contraseña no es válida, lanza una excepción de validación
             throw ValidationException::withMessages([
-                'password' => __('auth.password'),
+                'password' => __('auth.password'), // Mensaje de error de validación de contraseña
             ]);
         }
 
+        // Guarda en la sesión el tiempo de confirmación de la contraseña
         $request->session()->put('auth.password_confirmed_at', time());
 
+        // Redirecciona al usuario a la vista de dashboard
         return redirect()->intended(route('dashboard', absolute: false));
     }
 }

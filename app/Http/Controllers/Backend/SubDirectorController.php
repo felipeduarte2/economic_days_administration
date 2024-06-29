@@ -7,6 +7,7 @@ use App\Models\Periodo;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
 use App\Models\User;
+use App\Rules\PeriodoValidoRule;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -29,8 +30,11 @@ class SubDirectorController extends Controller
         // Obtener las últimas 5 solicitudes de permiso de pases de salida y de días económicos
         // ordenadas por fecha de creación en orden descendente. Estas solicitudes se paginan para mostrar
         // un número fijo de registros por página.
-        $solicitudes_p = SolicitudP::orderBy('created_at', 'desc')->paginate(5);
-        $solicitudes_d = SolicitudD::orderBy('created_at', 'desc')->paginate(5);
+        $solicitudes_p = SolicitudP::orderBy('created_at', 'desc')
+        ->whereNull('Validacion2')->paginate(5);
+        $solicitudes_d = SolicitudD::orderBy('created_at', 'desc')
+        ->whereNull('Validacion2')
+        ->paginate(5);
 
         // Mostrar la vista 'subdirector.dashboard' pasando las solicitudes como datos compactados
         return view('subdirector.dashboard', compact('solicitudes_p', 'solicitudes_d'));
@@ -70,12 +74,23 @@ class SubDirectorController extends Controller
         $solicitud->Validacion2 = true;
 
         // Verificamos si todas las validaciones de la solicitud son verdaderas.
-        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+        if (
+            // $solicitud->Validacion1 && 
+            $solicitud->Validacion2 && 
+            $solicitud->Validacion3) {
             // Si todas las validaciones son verdaderas, se establece la aprobación de la solicitud en true.
             $solicitud->Aprobacion = true;
-        } else {
+        } 
+        elseif (
+            // !$solicitud->Validacion1 || 
+            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion3 === 0){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
+        }
+        else {
+            // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
+            $solicitud->Aprobacion = null;
         }
 
         // Guardamos los cambios en la base de datos.
@@ -102,10 +117,16 @@ class SubDirectorController extends Controller
         $solicitud->Validacion2 = false;
 
         // Verificamos si alguna de las validaciones de la solicitud es falsa.
-        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+        if (
+            // $solicitud->Validacion1 && 
+            $solicitud->Validacion2 && 
+            $solicitud->Validacion3) {
             // Si todas las validaciones son verdaderas, se establece la aprobación de la solicitud en true.
             $solicitud->Aprobacion = true;
-        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+        } elseif (
+            // !$solicitud->Validacion1 || 
+            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion3 === 0){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
         } else {
@@ -152,10 +173,16 @@ class SubDirectorController extends Controller
         $solicitud->Validacion2 = true;
 
         // Verificamos si todas las validaciones de la solicitud son verdaderas.
-        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+        if (
+            // $solicitud->Validacion1 && 
+            $solicitud->Validacion2 && 
+            $solicitud->Validacion3) {
             // Si todas las validaciones son verdaderas, se establece la aprobación de la solicitud en true.
             $solicitud->Aprobacion = true;
-        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+        } elseif (
+            // !$solicitud->Validacion1 || 
+            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion3 === 0){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
         } else {
@@ -186,10 +213,16 @@ class SubDirectorController extends Controller
         $solicitud->Validacion2 = false;
 
         // Verificamos si alguna de las validaciones de la solicitud es falsa.
-        if ($solicitud->Validacion1 && $solicitud->Validacion2 && $solicitud->Validacion3) {
+        if (
+            // $solicitud->Validacion1 && 
+            $solicitud->Validacion2 && 
+            $solicitud->Validacion3) {
             // Si todas las validaciones son verdaderas, se establece la aprobación de la solicitud en true.
             $solicitud->Aprobacion = true;
-        } elseif (!$solicitud->Validacion1 || !$solicitud->Validacion2 || !$solicitud->Validacion3){
+        } elseif (
+            // !$solicitud->Validacion1 || 
+            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion3 === 0){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
         } else {
@@ -242,22 +275,27 @@ class SubDirectorController extends Controller
         $request->validate([
             'user_id' => 'required',
             'Motivo' => 'required',
-            'Fecha' => 'required',
+            'Fecha' => 
+                [
+                    'required', 'date',
+                    'after:' . Carbon::yesterday()->format('Y-m-d'),
+                    new PeriodoValidoRule
+                ],// Fecha solicitada, la Fecha debe ser despues a partir de hoy
             // 'Observaciones' => 'required',
         ]);
 
         // Obtiene la fecha actual
-        $today = Carbon::now()->format('Y-m-d');
+        // $today = Carbon::now()->format('Y-m-d');
 
         // Obtiene el período actual
-        $periodo = Periodo::where('fecha_inicio', '<=', $today)
-            ->where('fecha_fin', '>=', $today)
+        $periodo = Periodo::where('fecha_inicio', '<=', $request->Fecha)
+            ->where('fecha_fin', '>=', $request->Fecha)
             ->first();
 
-        // Verifica si se encontró un período válido
-        if (!$periodo) {
-            throw new \Exception('No se encontró un período válido para la fecha actual.');
-        }
+        // // Verifica si se encontró un período válido
+        // if (!$periodo) {
+        //     throw new \Exception('No se encontró un período válido para la fecha actual.');
+        // }
 
         // Crea una nueva solicitud de días económicos
         $solicitud = SolicitudD::create([
@@ -268,7 +306,12 @@ class SubDirectorController extends Controller
             'user_id' => $request->user_id,
             'IdPeriodo' => $periodo->IdPeriodo,
             'Aprobacion' => true,
+            'Validacion1' => true,
             'Validacion2' => true,
+            'Validacion3' => true,
+            'FechaValida1' => date('Y-m-d'),
+            'FechaValida3' => date('Y-m-d'),
+            'FechaValida3' => date('Y-m-d'),
         ]);
 
         // Guarda la solicitud en la base de datos

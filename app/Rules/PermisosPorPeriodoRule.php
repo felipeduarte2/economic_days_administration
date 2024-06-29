@@ -36,14 +36,23 @@ class PermisosPorPeriodoRule implements ValidationRule
             ->where('fecha_fin', '>=', $value)
             ->first();
 
-        // Consultar todas las solicitudes del usuario para ese período
-        $solicitudes = SolicitudD::where('user_id', auth()->user()->id)
+        if ($periodo) {
+            // $fail('No se encontró un día válido para la fecha');
+
+            // Consultar todas las solicitudes del usuario para ese período
+            $solicitudes = SolicitudD::where('user_id', auth()->user()->id)
             ->where('IdPeriodo', $periodo->IdPeriodo)
             ->get();
 
-        // Si hay más de tres solicitudes, mostrar un mensaje de error
-        if ($solicitudes->count() >= 3) {
-            $fail('Solo puede tener 3 solicitudes por período');
+            // Si hay más de tres solicitudes, mostrar un mensaje de error
+            if ($solicitudes->count() >= 3) {
+                $fail('Solo puede tener 3 solicitudes por período');
+            }
+        }
+
+        // Si no se encontró un día válido para la fecha, mostrar un mensaje de error
+        if (!$periodo) {
+            $fail('No se encontró un período válido para la fecha');
         }
     }
 }

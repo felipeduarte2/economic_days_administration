@@ -5,29 +5,29 @@ use Illuminate\Support\Str;
 return [
 
     /*
-    |--------------------------------------------------------------------------
-    | Default Cache Store
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Almacén de caché predeterminado
+    |------------------------------------------------- -------------------------
     |
-    | This option controls the default cache store that will be used by the
-    | framework. This connection is utilized if another isn't explicitly
-    | specified when running a cache operation inside the application.
+    | Esta opción controla el almacén de caché predeterminado que utilizará el
+    | estructura. Esta conexión se utiliza si otra no está explícitamente
+    | especificado al ejecutar una operación de caché dentro de la aplicación.
     |
     */
 
     'default' => env('CACHE_STORE', 'database'),
 
     /*
-    |--------------------------------------------------------------------------
-    | Cache Stores
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Almacenes de caché
+    |------------------------------------------------- -------------------------
     |
-    | Here you may define all of the cache "stores" for your application as
-    | well as their drivers. You may even define multiple stores for the
-    | same cache driver to group types of items stored in your caches.
+    | Aquí puede definir todos los "almacenes" de caché para su aplicación como
+    | así como sus conductores. Incluso puedes definir varias tiendas para el
+    | mismo controlador de caché para agrupar tipos de elementos almacenados en sus cachés.
     |
-    | Supported drivers: "apc", "array", "database", "file", "memcached",
-    |                    "redis", "dynamodb", "octane", "null"
+    | Controladores compatibles: "apc", "array", "database", "file", "memcached",
+    | "redis", "dynamodb", "octano", "nulo"
     |
     */
 
@@ -92,13 +92,13 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Cache Key Prefix
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Prefijo de clave de caché
+    |------------------------------------------------- -------------------------
     |
-    | When utilizing the APC, database, memcached, Redis, and DynamoDB cache
-    | stores, there might be other applications using the same cache. For
-    | that reason, you may prefix every cache key to avoid collisions.
+    | Cuando se utiliza la caché de APC, base de datos, memcached, Redis y DynamoDB
+    | tiendas, puede haber otras aplicaciones usando el mismo caché. Para
+    | Por esa razón, puede anteponer cada clave de caché para evitar colisiones.
     |
     */
 
