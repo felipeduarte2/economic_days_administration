@@ -22,8 +22,12 @@ class Administrador
             // Si es un administrador, pasa la solicitud al siguiente middleware
             return $next($request);
         }
+
+        // redirecionar a /dashboard
+        return redirect('/dashboard');
+
         // Si no es un administrador, genera una respuesta de error 401 (No autorizado)
-        abort(401);
+        // abort(401);
         // Se podría redirigir al usuario a otra ruta o retornar una respuesta JSON de error
         // return redirect('/');
         // return response()->json(['error' => 'Unauthorized'], 401);

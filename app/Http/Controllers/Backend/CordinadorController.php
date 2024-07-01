@@ -115,11 +115,17 @@ class CordinadorController extends Controller
                 // si el usuario tiene un correo electronico
                 if ($user->email) {
                     // Envio de notificación por correo electronico
-                    Mail::to(
-                        $user->email
-                    )->send(
-                        new EmailPermisosRespueta($solicitud)
-                    );
+                    try{
+                        Mail::to(
+                            $user->email
+                        )->send(
+                            new EmailPermisosRespueta($solicitud)
+                        );
+                    }
+                    catch (\Exception $e)
+                    {
+                        throw $e;
+                    }
                 }
             }
         }
@@ -175,11 +181,17 @@ class CordinadorController extends Controller
                 // si el usuario tiene un correo electronico
                 if ($user->email) {
                     // Envio de notificación por correo electronico
+                    try{
                     Mail::to(
                         $user->email
                     )->send(
                         new EmailPermisosRespueta($solicitud)
                     );
+                    }
+                    catch (\Exception $e)
+                    {
+                        throw $e;
+                    }
                 }
             }
         }
@@ -255,12 +267,18 @@ class CordinadorController extends Controller
                 // si el usuario tiene un correo electronico
                 if ($user->email) {
                     // Envio de notificación por correo electronico
-                    Mail::to(
-                        $user->email
-                    )->send(
-                        new EmailPermisosRespueta($solicitud)
-                    );
-                }
+                    try{
+                        Mail::to(
+                            $user->email
+                        )->send(
+                            new EmailPermisosRespueta($solicitud)
+                        );
+                    }
+                    catch (\Exception $e)
+                    {
+                        throw $e;
+                    }
+                    }
             }
         }
 
@@ -315,11 +333,17 @@ class CordinadorController extends Controller
                 // si el usuario tiene un correo electronico
                 if ($user->email) {
                     // Envio de notificación por correo electronico
-                    Mail::to(
-                        $user->email
-                    )->send(
-                        new EmailPermisosRespueta($solicitud)
-                    );
+                    try{
+                        Mail::to(
+                            $user->email
+                        )->send(
+                            new EmailPermisosRespueta($solicitud)
+                        );
+                    }
+                    catch (\Exception $e)
+                    {
+                        throw $e;
+                    }
                 }
             }
         }

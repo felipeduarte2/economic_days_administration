@@ -29,12 +29,12 @@ class DatabaseSeeder extends Seeder
         SolicitudP::factory(10)->Create();
 
         DB::table('users')->insert([
-            'Nombre' => 'Felipe',
-            'ApellidoP' => 'Duarte',
-            'ApellidoM' => 'Castillo',
+            'Nombre' => 'Admin',
+            'ApellidoP' => 'Admin',
+            'ApellidoM' => 'Admin',
             'Codigo_empleado' => '000000',
             'email' => 'test@example.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('000000'),
             'status' => 'Activo',
             'IdDepartamento' => 1,
             'IdPuesto' => 1,

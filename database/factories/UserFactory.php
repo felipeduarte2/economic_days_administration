@@ -37,7 +37,7 @@ class UserFactory extends Factory
             'ApellidoM' => fake()->lastName(),
             'status' => 'Activo',
             'IdDepartamento' => Departamento::all()->random()->IdDepartamento,
-            'IdPuesto' => 5, 
+            'IdPuesto' => 4, 
         ];
     }
 

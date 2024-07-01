@@ -26,7 +26,10 @@ class Cordinador
             // Si es coordinador, pasar la solicitud a la siguiente capa de middleware
             return $next($request);
         }
-        // Si no es coordinador, abortar la solicitud con un código de error 401
-        abort(401);
+        // redirecionar a /dashboard
+        return redirect('/dashboard');
+
+        // // Si no es coordinador, abortar la solicitud con un código de error 401
+        // abort(401);
     }
 }

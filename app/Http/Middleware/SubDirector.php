@@ -25,7 +25,11 @@ class SubDirector
             // Si es un subdirector, pasa la solicitud al siguiente middleware
             return $next($request);
         }
-        // Si no es un subdirector, genera una respuesta de error 401 (No autorizado)
-        abort(401);
+
+        // redirecionar a /dashboard
+        return redirect('/dashboard');
+
+        // // Si no es un subdirector, genera una respuesta de error 401 (No autorizado)
+        // abort(401);
     }
 }

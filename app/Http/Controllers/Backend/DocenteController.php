@@ -101,11 +101,18 @@ class DocenteController extends Controller
         // si exite sub director
         if ($subdirector) {
             // Envio de notificación por correo electronico
-            Mail::to(
-                $subdirector->email
-            )->send(
-                new EmailPermisos($solicitud, $subdirector)
-            );
+            try
+            {
+                Mail::to(
+                    $subdirector->email
+                )->send(
+                    new EmailPermisos($solicitud, $subdirector)
+                );
+            }
+            catch (\Exception $e)
+            {
+                throw $e;
+            }
         }
 
         // Obtener el cordinador
@@ -117,11 +124,17 @@ class DocenteController extends Controller
         // si exite cordinador
         if ($cordinador) {
             // Envio de notificación por correo electronico
-            Mail::to(
-                $cordinador->email
-            )->send(
-                new EmailPermisos($solicitud, $cordinador)
-            );
+            try{
+                Mail::to(
+                    $cordinador->email
+                )->send(
+                    new EmailPermisos($solicitud, $cordinador)
+                );
+            }
+            catch (\Exception $e)
+            {
+                throw $e;
+            }
         }
 
         // Redirecciona al tablero del docente
@@ -194,11 +207,18 @@ class DocenteController extends Controller
         // si exite sub director
         if ($subdirector) {
             // Envio de notificación por correo electronico
-            Mail::to(
-                $subdirector->email
-            )->send(
-                new EmailPermisos($solicitud, $subdirector)
-            );
+            try{
+                Mail::to(
+                    $subdirector->email
+                )->send(
+                    new EmailPermisos($solicitud, $subdirector)
+                );
+            }
+            catch (\Exception $e)
+            {
+                throw $e;
+            }
+
         }
 
         // Obtener el cordinador
@@ -210,11 +230,18 @@ class DocenteController extends Controller
         // si exite cordinador
         if ($cordinador) {
             // Envio de notificación por correo electronico
-            Mail::to(
-                $cordinador->email
-            )->send(
-                new EmailPermisos($solicitud, $cordinador)
-            );
+            try{
+                
+                Mail::to(
+                    $cordinador->email
+                )->send(
+                    new EmailPermisos($solicitud, $cordinador)
+                );
+            }
+            catch (\Exception $e)
+            {
+                throw $e;
+            }
         }
 
         // Redirecciona al tablero del docente

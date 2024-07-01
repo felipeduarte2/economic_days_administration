@@ -14,7 +14,15 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    // return view('dashboard');
+    // que sea un RedirectResponse
+    if(auth()->user()->puesto->Descripcion === 'Docente') return redirect()->route('docente.dashboard');
+    if(auth()->user()->puesto->Descripcion === 'Administrador') return redirect()->route('administrador.dashboard');
+    if(auth()->user()->puesto->Descripcion === 'Cordinador') return redirect()->route('cordinador.dashboard');
+    if(auth()->user()->puesto->Descripcion === 'SubDirector') return redirect()->route('subdirector.dashboard');
+    if(auth()->user()->puesto->Descripcion === 'Director') return redirect()->route('director.dashboard');
+    // return redirect()->route('dashboard');
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -38,19 +46,19 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::post('/administrador/periodos/create', [AdministradorController::class, 'storePeriodo'])->name('administrador.periodos.create');
 });
 
-//Rutas de director
-Route::middleware(['auth','director'])->group(function () {
-    Route::get('/director.dashboard',[DirectorController::class, 'dashboard'])->name('director.dashboard');
-    // 
-    Route::get('/director/detalles_d/{solicitud}', [DirectorController::class, 'create_detalles_solicitud_d'])->name('director.detalles_solicitud_d');
-    Route::get('/director/detalles_p/{solicitud}', [DirectorController::class, 'create_detalles_solicitud_p'])->name('director.detalles_solicitud_p');
-    // 
-    Route::put('/director/detalles_d/accept/{solicitud}', [DirectorController::class, 'update_accept_solicitud_d'])->name('director.detalles_solicitud_d.accept');
-    Route::put('/director/detalles_d/reject/{solicitud}', [DirectorController::class, 'update_reject_solicitud_d'])->name('director.detalles_solicitud_d.reject');
-    // 
-    Route::put('/director/detalles_p/accept/{solicitud}', [DirectorController::class, 'update_accept_solicitud_p'])->name('director.detalles_solicitud_p.accept');
-    Route::put('/director/detalles_p/reject/{solicitud}', [DirectorController::class, 'update_reject_solicitud_p'])->name('director.detalles_solicitud_p.reject');
-});
+// //Rutas de director
+// Route::middleware(['auth','director'])->group(function () {
+//     Route::get('/director.dashboard',[DirectorController::class, 'dashboard'])->name('director.dashboard');
+//     // 
+//     Route::get('/director/detalles_d/{solicitud}', [DirectorController::class, 'create_detalles_solicitud_d'])->name('director.detalles_solicitud_d');
+//     Route::get('/director/detalles_p/{solicitud}', [DirectorController::class, 'create_detalles_solicitud_p'])->name('director.detalles_solicitud_p');
+//     // 
+//     Route::put('/director/detalles_d/accept/{solicitud}', [DirectorController::class, 'update_accept_solicitud_d'])->name('director.detalles_solicitud_d.accept');
+//     Route::put('/director/detalles_d/reject/{solicitud}', [DirectorController::class, 'update_reject_solicitud_d'])->name('director.detalles_solicitud_d.reject');
+//     // 
+//     Route::put('/director/detalles_p/accept/{solicitud}', [DirectorController::class, 'update_accept_solicitud_p'])->name('director.detalles_solicitud_p.accept');
+//     Route::put('/director/detalles_p/reject/{solicitud}', [DirectorController::class, 'update_reject_solicitud_p'])->name('director.detalles_solicitud_p.reject');
+// });
 
 //Rutas de subdirector
 Route::middleware(['auth','subdirector'])->group(function () {
