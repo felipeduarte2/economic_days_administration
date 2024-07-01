@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use App\Models\Periodo;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -24,6 +25,10 @@ class PeriodoValidoRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+
+        // Convertir $value en formato Y-m-d
+        $value = Carbon::parse($value)->format('Y-m-d');
+        
         // Buscar un período válido para la fecha ingresada
         $periodo = Periodo::where('fecha_inicio', '<=', $value)
             ->where('fecha_fin', '>=', $value)

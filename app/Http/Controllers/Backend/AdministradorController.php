@@ -4,27 +4,26 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Departamento;
+use App\Models\Periodo;
 use App\Models\Puesto;
 use App\Models\User;
 use App\Rules\CordinadorRule;
 use App\Rules\DirectorRule;
+use App\Rules\PeriodosRule;
 use App\Rules\SubDirectorRule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Closure;
 
 class AdministradorController extends Controller
 {
     //
     public function dashboard(): View
     {
-        // user en orden del mas reciente paginado de 5, no mostrar el auth()->user
-;
-        $users = User::where('id', '!=', auth()->user()->id)->latest()->paginate(5);
-        // $users = User::orderBy('created_at', 'desc')->paginate(5);
-        // $users = User::orderBy('created_at', 'desc')->get();
+        $users = User::where('id', '!=', auth()->user()->id)->latest()->paginate(10);
         return view('administrador.dashboard', compact('users'));
     }
 
@@ -96,5 +95,50 @@ class AdministradorController extends Controller
 
         return redirect()->route('administrador.dashboard');
     }
+
+
+    public function destroy(User $user): RedirectResponse
+    {
+        $user->delete();
+        return redirect()->route('administrador.dashboard');
+    }
+
+    // fuencion para una vista Periodos
+    public function periodos(): View
+    {
+        $periodos = Periodo::latest()->paginate(10);
+        return view('administrador.periodos', compact('periodos'));
+    }
+
+
+    // funcion para una vista para crear un nuevo Periodo
+    public function createPeriodo(): View
+    {
+        return view('administrador.create_periodo');
+    }
+
+    // funcion para crear un nuevo Periodo
+    public function storePeriodo(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'descripcion' => ['required', 'string', 'max:20'],
+            'fecha_inicio' => [
+                'required', 
+                'date',
+                'before:fecha_fin',
+                new PeriodosRule
+            ],
+            'fecha_fin' => [
+                'required', 
+                'date', 
+                'after:fecha_inicio',
+                new PeriodosRule
+            ],
+        ]);
+        Periodo::create($request->all());
+
+        return redirect()->route('administrador.periodos');
+    }
+
 
 }

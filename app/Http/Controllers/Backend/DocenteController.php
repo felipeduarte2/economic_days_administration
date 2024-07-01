@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\EmailPermisos;
 use App\Models\Periodo;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
+use App\Models\User;
 use App\Rules\PeriodoValidoRule;
 use App\Rules\PermisosPorDiaRule;
 use App\Rules\PermisosPorPeriodoRule;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class DocenteController extends Controller
@@ -89,6 +92,38 @@ class DocenteController extends Controller
         // Guarda la solicitud en la base de datos
         $solicitud->save();
 
+        // obtener el user sub director
+        $subdirector = User::
+            whereHas('puesto', fn ($query) => $query->where('Descripcion', 'SubDirector'))
+            ->where('status', 'Activo')
+            ->first();
+
+        // si exite sub director
+        if ($subdirector) {
+            // Envio de notificación por correo electronico
+            Mail::to(
+                $subdirector->email
+            )->send(
+                new EmailPermisos($solicitud, $subdirector)
+            );
+        }
+
+        // Obtener el cordinador
+        $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Cordinador'))
+            ->where('status', 'Activo')
+            ->where('IdDepartamento', auth()->user()->IdDepartamento)
+            ->first();
+
+        // si exite cordinador
+        if ($cordinador) {
+            // Envio de notificación por correo electronico
+            Mail::to(
+                $cordinador->email
+            )->send(
+                new EmailPermisos($solicitud, $cordinador)
+            );
+        }
+
         // Redirecciona al tablero del docente
         return redirect()->route('docente.dashboard');
     }
@@ -149,6 +184,38 @@ class DocenteController extends Controller
 
         // Guarda la solicitud en la base de datos
         $solicitud->save();
+
+        // obtener el user sub director
+        $subdirector = User::
+            whereHas('puesto', fn ($query) => $query->where('Descripcion', 'SubDirector'))
+            ->where('status', 'Activo')
+            ->first();
+
+        // si exite sub director
+        if ($subdirector) {
+            // Envio de notificación por correo electronico
+            Mail::to(
+                $subdirector->email
+            )->send(
+                new EmailPermisos($solicitud, $subdirector)
+            );
+        }
+
+        // Obtener el cordinador
+        $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Cordinador'))
+            ->where('status', 'Activo')
+            ->where('IdDepartamento', auth()->user()->IdDepartamento)
+            ->first();
+
+        // si exite cordinador
+        if ($cordinador) {
+            // Envio de notificación por correo electronico
+            Mail::to(
+                $cordinador->email
+            )->send(
+                new EmailPermisos($solicitud, $cordinador)
+            );
+        }
 
         // Redirecciona al tablero del docente
         return redirect()->route('docente.dashboard');

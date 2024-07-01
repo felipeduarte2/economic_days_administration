@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\EmailPermisosRespueta;
 use App\Models\Periodo;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
 
 class SubDirectorController extends Controller
 {
@@ -84,9 +86,10 @@ class SubDirectorController extends Controller
         elseif (
             // !$solicitud->Validacion1 || 
             $solicitud->Validacion2 === 0 || 
-            $solicitud->Validacion3 === 0){
+            $solicitud->Validacion3 !== null){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
+
         }
         else {
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
@@ -95,6 +98,24 @@ class SubDirectorController extends Controller
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save(); 
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redireccionamos a la vista del dashboard del subdirector.
         return redirect()->route('subdirector.dashboard');
@@ -126,7 +147,7 @@ class SubDirectorController extends Controller
         } elseif (
             // !$solicitud->Validacion1 || 
             $solicitud->Validacion2 === 0 || 
-            $solicitud->Validacion3 === 0){
+            $solicitud->Validacion3 !== null){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
         } else {
@@ -136,6 +157,24 @@ class SubDirectorController extends Controller
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save();
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redireccionamos a la vista del dashboard del subdirector.
         return redirect()->route('subdirector.dashboard');
@@ -182,7 +221,7 @@ class SubDirectorController extends Controller
         } elseif (
             // !$solicitud->Validacion1 || 
             $solicitud->Validacion2 === 0 || 
-            $solicitud->Validacion3 === 0){
+            $solicitud->Validacion3 !== null){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
         } else {
@@ -192,6 +231,24 @@ class SubDirectorController extends Controller
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save();
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redireccionamos a la vista del dashboard del subdirector.
         return redirect()->route('subdirector.dashboard');
@@ -222,7 +279,7 @@ class SubDirectorController extends Controller
         } elseif (
             // !$solicitud->Validacion1 || 
             $solicitud->Validacion2 === 0 || 
-            $solicitud->Validacion3 === 0){
+            $solicitud->Validacion3 !== null){
             // Si alguna de las validaciones es falsa, se establece la aprobación de la solicitud en false.
             $solicitud->Aprobacion = false;
         } else {
@@ -232,6 +289,24 @@ class SubDirectorController extends Controller
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save();
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redireccionamos a la vista del dashboard del subdirector.
         return redirect()->route('subdirector.dashboard');

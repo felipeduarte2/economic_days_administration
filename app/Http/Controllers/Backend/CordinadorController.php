@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\EmailPermisosRespueta;
 use App\Models\Periodo;
 use Illuminate\Http\RedirectResponse;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class CordinadorController extends Controller
@@ -95,13 +98,31 @@ class CordinadorController extends Controller
             $solicitud->Validacion3) {
             $solicitud->Aprobacion = true;
         } elseif (
-            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion2 !== null || 
             $solicitud->Validacion3 === 0){
             $solicitud->Aprobacion = false;
         }else { $solicitud->Aprobacion = null;}
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save(); 
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redirigimos a la vista del tablero del coordinador.
         return redirect()->route('cordinador.dashboard');
@@ -133,7 +154,7 @@ class CordinadorController extends Controller
         // Si alguna de las validaciones es 0, rechazamos.
         elseif (
             // !$solicitud->Validacion1 || 
-            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion2 !== null || 
             $solicitud->Validacion3 === 0){
             $solicitud->Aprobacion = false;
         }
@@ -144,6 +165,24 @@ class CordinadorController extends Controller
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save(); 
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redirigimos a la vista del tablero del coordinador.
         return redirect()->route('cordinador.dashboard');
@@ -195,7 +234,7 @@ class CordinadorController extends Controller
         // Si alguna de las validaciones es 0, rechazamos.
         elseif (
             // !$solicitud->Validacion1 || 
-            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion2 !== null || 
             $solicitud->Validacion3 === 0){
             $solicitud->Aprobacion = false;
         }
@@ -206,6 +245,24 @@ class CordinadorController extends Controller
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save(); 
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redirigimos a la vista del tablero del coordinador.
         return redirect()->route('cordinador.dashboard');
@@ -237,7 +294,7 @@ class CordinadorController extends Controller
         // Si alguna de las validaciones es 0, rechazamos.
         elseif (
             // !$solicitud->Validacion1 || 
-            $solicitud->Validacion2 === 0 || 
+            $solicitud->Validacion2 !== null || 
             $solicitud->Validacion3 === 0){
             $solicitud->Aprobacion = false;
         }
@@ -248,6 +305,24 @@ class CordinadorController extends Controller
 
         // Guardamos los cambios en la base de datos.
         $solicitud->save();
+
+        if($solicitud->Aprobacion !== null){
+            // obetener al usuario de la solicitud
+            $user = User::find($solicitud->user_id);
+
+            // si exite el usuario
+            if ($user) {
+                // si el usuario tiene un correo electronico
+                if ($user->email) {
+                    // Envio de notificación por correo electronico
+                    Mail::to(
+                        $user->email
+                    )->send(
+                        new EmailPermisosRespueta($solicitud)
+                    );
+                }
+            }
+        }
 
         // Redirigimos a la vista del tablero del coordinador.
         return redirect()->route('cordinador.dashboard');

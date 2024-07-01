@@ -67,21 +67,21 @@
                     {{-- Botonenes de Aceptar Y Rechazar --}}
                     <div class="flex items-center justify-end mt-4">
 
-                        <form method="POST" action="{{ route('subdirector.detalles_solicitud_d.accept', $solicitud) }}">
-                            @csrf
-                            @method('put')
-
-                            <x-primary-button class="ml-4">
-                                {{ __('Aceptar') }}
-                            </x-primary-button>
-                        </form>
-
                         <form method="POST" action="{{ route('subdirector.detalles_solicitud_d.reject', $solicitud) }}">
                             @csrf
                             @method('put')
 
                             <x-primary-button class="ml-4">
                                 {{ __('Rechazar') }}
+                            </x-primary-button>
+                        </form>
+
+                        <form method="POST" action="{{ route('subdirector.detalles_solicitud_d.accept', $solicitud) }}">
+                            @csrf
+                            @method('put')
+
+                            <x-primary-button class="ml-4">
+                                {{ __('Aceptar') }}
                             </x-primary-button>
                         </form>
 

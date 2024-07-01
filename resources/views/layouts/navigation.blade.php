@@ -71,6 +71,14 @@
                         <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
                             {{ __('Nuevo Usuario') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('administrador.periodos')" :active="request()->routeIs('administrador.periodos')">
+                            {{ __('Periodos') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('administrador.periodos.create')" :active="request()->routeIs('administrador.periodos.create')">
+                            {{ __('Nuevo Periodo') }}
+                        </x-nav-link>
                     @endif
 
                     {{-- Director --}}
@@ -184,6 +192,14 @@
 
                 <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
                     {{ __('Nuevo Usuario') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('administrador.periodos')" :active="request()->routeIs('administrador.periodos')">
+                    {{ __('Periodos') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('administrador.periodos.create')" :active="request()->routeIs('administrador.periodos.create')">
+                    {{ __('Nuevo Periodo') }}
                 </x-responsive-nav-link>
             @endif
             {{-- Director --}}

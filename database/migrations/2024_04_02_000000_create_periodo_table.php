@@ -25,7 +25,7 @@ return new class extends Migration
             $table->id('IdPeriodo');
 
             // La columna 'descripcion' puede almacenar valores de cadena hasta 20 caracteres.
-            $table->string('descripcion', 20)->comment('Descripción del período');
+            $table->string('descripcion', 20);
             
             // La columna 'fecha_inicio' y 'fecha_fin' puede almacenar valores de fecha y hora.
             // El valor 'por defecto' de 'fecha_inicio' y 'fecha_fin' está establecido en la fecha y hora actual en el
