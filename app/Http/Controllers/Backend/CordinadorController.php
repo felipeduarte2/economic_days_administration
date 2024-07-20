@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailPermisosRespueta;
 use App\Models\Periodo;
+use App\Models\Solicitud;
 use Illuminate\Http\RedirectResponse;
-use App\Models\SolicitudD;
-use App\Models\SolicitudP;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,18 +30,8 @@ class CordinadorController extends Controller
         // que aún no han sido validadas por el coordinador.
         // Utilizamos el método whereHas para obtener las solicitudes que tengan un usuario
         // que pertenezca a su departamento.
-        $solicitudes_p = SolicitudP::whereHas('user', function($query){
-            // Filtramos los usuarios que pertenezcan a su departamento.
-            $query->where('IdDepartamento', auth()->user()->IdDepartamento);
-        })
-        // Filtramos las solicitudes que no hayan sido validadas por el coordinador.
-        ->whereNull('Validacion3')
-        // Ordenamos las solicitudes por la fecha de creación en orden descendente.
-        ->latest()->paginate(5);
 
-        // Traemos todas las solicitudes de días económicos de los usuarios de su departamento,
-        // que aún no han sido validadas por el coordinador.
-        $solicitudes_d = SolicitudD::whereHas('user', function($query){
+        $solicitudes = Solicitud::whereHas('user', function($query){
             // Filtramos los usuarios que pertenezcan a su departamento.
             $query->where('IdDepartamento', auth()->user()->IdDepartamento);
         })
@@ -53,7 +42,8 @@ class CordinadorController extends Controller
 
         // Devolvemos la vista del tablero del coordinador, pasando las solicitudes de permisos
         // y días económicos como variables.
-        return view('cordinador.dashboard', compact('solicitudes_p', 'solicitudes_d'));
+        // return view('cordinador.dashboard', compact('solicitudes_p', 'solicitudes_d'));
+        return view('cordinador.dashboard', compact('solicitudes'));
     }
 
 
@@ -63,10 +53,10 @@ class CordinadorController extends Controller
     /**
      * Crea una vista para mostrar los detalles de una solicitud de días económicos.
      *
-     * @param SolicitudD $solicitud La solicitud de días económicos a mostrar.
+     * @param Solicitud $solicitud La solicitud de días económicos a mostrar.
      * @return View La vista de los detalles de la solicitud de días económicos.
      */
-    public function create_detalles_solicitud_d(SolicitudD $solicitud): View
+    public function create_detalles_solicitud_d(Solicitud $solicitud): View
     {
         // Retorna la vista de los detalles de la solicitud de días económicos, pasando la solicitud como variable compact.
         return view(
@@ -83,11 +73,11 @@ class CordinadorController extends Controller
     /**
      * Actualiza la solicitud de días económicos y cambia el estado de validación por el coordinador a true.
      *
-     * @param SolicitudD $solicitud La solicitud de días económicos a actualizar.
+     * @param SolicitudD$solicitud La solicitud de días económicos a actualizar.
      * @param Request $request El objeto de solicitud que contiene los datos de la solicitud.
      * @return RedirectResponse La respuesta de redirección a la vista del tablero del coordinador.
      */
-    public function update_accept_solicitud_d(SolicitudD $solicitud, Request $request):RedirectResponse
+    public function update_accept_solicitud_d(Solicitud $solicitud, Request $request):RedirectResponse
     {
         // Cambiamos el estado de validación por el coordinador a true.
         $solicitud->Validacion3 = true;
@@ -141,11 +131,11 @@ class CordinadorController extends Controller
     /**
      * Actualiza la solicitud de días económicos y cambia el estado de validación por el coordinador a false.
      *
-     * @param SolicitudD $solicitud La solicitud de días económicos a actualizar.
+     * @param Solicitud $solicitud La solicitud de días económicos a actualizar.
      * @param Request $request El objeto de solicitud que contiene los datos de la solicitud.
      * @return RedirectResponse La respuesta de redirección a la vista del tablero del coordinador.
      */
-    public function update_reject_solicitud_d(SolicitudD $solicitud, Request $request):RedirectResponse
+    public function update_reject_solicitud_d(Solicitud $solicitud, Request $request):RedirectResponse
     {
         // Cambiamos el estado de validación por el coordinador a false.
         $solicitud->Validacion3 = false;
@@ -159,7 +149,6 @@ class CordinadorController extends Controller
         } 
         // Si alguna de las validaciones es 0, rechazamos.
         elseif (
-            // !$solicitud->Validacion1 || 
             $solicitud->Validacion2 !== null || 
             $solicitud->Validacion3 === 0){
             $solicitud->Aprobacion = false;
@@ -207,10 +196,10 @@ class CordinadorController extends Controller
     /**
      * Crea una vista para mostrar los detalles de una solicitud de pases de salida.
      *
-     * @param SolicitudP $solicitud La solicitud de pases de salida a mostrar.
+     * @param Solicitud $solicitud La solicitud de pases de salida a mostrar.
      * @return View La vista de los detalles de la solicitud de pases de salida.
      */
-    public function create_detalles_solicitud_p(SolicitudP $solicitud): View
+    public function create_detalles_solicitud_p(Solicitud $solicitud): View
     {
         // Retorna la vista de los detalles de la solicitud de pases de salida,
         // pasando la solicitud como variable compact.
@@ -227,11 +216,11 @@ class CordinadorController extends Controller
     /**
      * Actualiza la solicitud de pases de salida y cambia el estado de validación por el coordinador a true.
      *
-     * @param SolicitudP $solicitud La solicitud de pases de salida a actualizar.
+     * @param Solicitud $solicitud La solicitud de pases de salida a actualizar.
      * @param Request $request El objeto de solicitud que contiene los datos de la solicitud.
      * @return RedirectResponse La respuesta de redirección a la vista del tablero del coordinador.
      */
-    public function update_accept_solicitud_p(SolicitudP $solicitud, Request $request):RedirectResponse
+    public function update_accept_solicitud_p(Solicitud $solicitud, Request $request):RedirectResponse
     {
         // Cambiamos el estado de validación por el coordinador a true.
         $solicitud->Validacion3 = true;
@@ -245,7 +234,6 @@ class CordinadorController extends Controller
         } 
         // Si alguna de las validaciones es 0, rechazamos.
         elseif (
-            // !$solicitud->Validacion1 || 
             $solicitud->Validacion2 !== null || 
             $solicitud->Validacion3 === 0){
             $solicitud->Aprobacion = false;
@@ -293,11 +281,11 @@ class CordinadorController extends Controller
     /**
      * Actualiza la solicitud de pases de salida y cambia el estado de validación por el coordinador a false.
      *
-     * @param SolicitudP $solicitud La solicitud de pases de salida a actualizar.
+     * @param Solicitud $solicitud La solicitud de pases de salida a actualizar.
      * @param Request $request El objeto de solicitud que contiene los datos de la solicitud.
      * @return RedirectResponse La respuesta de redirección a la vista del tablero del coordinador.
      */
-    public function update_reject_solicitud_p(SolicitudP $solicitud, Request $request):RedirectResponse
+    public function update_reject_solicitud_p(Solicitud $solicitud, Request $request):RedirectResponse
     {
         // Cambiamos el estado de validación por el coordinador a false.
         $solicitud->Validacion3 = false;
@@ -311,7 +299,6 @@ class CordinadorController extends Controller
         } 
         // Si alguna de las validaciones es 0, rechazamos.
         elseif (
-            // !$solicitud->Validacion1 || 
             $solicitud->Validacion2 !== null || 
             $solicitud->Validacion3 === 0){
             $solicitud->Aprobacion = false;
@@ -359,7 +346,7 @@ class CordinadorController extends Controller
     /**
      * Vista para mostrar el listado de permisos.
      * 
-     * Trae un listado de todas las solicitudes de días económicos (SolicitudD)
+     * Trae un listado de todas las solicitudes de días económicos (Solicitud)
      * que pertenezcan al departamento del usuario autenticado, que sean aprobadas
      * (Aprobacion = true) y que pertenezcan al período actual.
      *
@@ -376,10 +363,11 @@ class CordinadorController extends Controller
             ->first();
 
         // Obtener las solicitudes de días económicos aprobadas del departamento del usuario autenticado
-        $solicitudes = SolicitudD::whereHas('user', function($query){
+        $solicitudes = Solicitud::whereHas('user', function($query){
             // Filtrar por el departamento del usuario
             $query->where('IdDepartamento', auth()->user()->IdDepartamento);
         })
+        ->where('tipo_solicitud', 'dias_economicos')
         ->where('Aprobacion', true)
         ->where('IdPeriodo', $periodo->IdPeriodo)
         ->latest()->paginate(10);
@@ -411,10 +399,11 @@ class CordinadorController extends Controller
             ->first();
 
         // Obtener las solicitudes de días económicos aprobadas del departamento del usuario autenticado
-        $solicitudes = SolicitudD::whereHas('user', function($query){
+        $solicitudes = Solicitud::whereHas('user', function($query){
             // Filtrar por el departamento del usuario
             $query->where('IdDepartamento', auth()->user()->IdDepartamento);
         })
+        ->where('tipo_solicitud', 'dias_economicos')
         ->where('Aprobacion', true)
         ->where('IdPeriodo', $periodo->IdPeriodo)
         ->latest()->get();
@@ -503,12 +492,13 @@ class CordinadorController extends Controller
         ]);
 
         // Obtener las solicitudes entre las fechas
-        $solicitudes = SolicitudD::whereHas('user', function($query){
+        $solicitudes = Solicitud::whereHas('user', function($query){
             $query->where('IdDepartamento', auth()->user()->IdDepartamento);
         })
+        ->where('tipo_solicitud', 'dias_economicos')
         ->where('Aprobacion', true)
         ->where('FechaSolicitada', '>=', Carbon::parse($request->start)->format('Y-m-d'))
-        ->where('FechaSolicitada', '<=', Carbon::parse($request->end)->format('Y-m-d'))
+        ->where('FechaSolicitada', '<=', Carbon::parse($request->end)->addDay()->format('Y-m-d'))
         ->latest()->get();
 
         // Crear el objeto PDF

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Solicitud;
 use App\Models\SolicitudD;
 use App\Models\SolicitudP;
 use App\Models\User;
@@ -22,7 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PeriodosSeeder::class);
 
 
-        // User::factory(15)->Create();
+        User::factory(15)->Create();
+
+        Solicitud::factory(50)->Create();
 
         // SolicitudD::factory(10)->Create();
 

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailPermisos;
 use App\Models\Periodo;
-use App\Models\SolicitudD;
-use App\Models\SolicitudP;
+use App\Models\Solicitud;
 use App\Models\User;
 use App\Rules\PeriodoValidoRule;
 use App\Rules\PermisosPorDiaRule;
@@ -28,13 +27,12 @@ class DocenteController extends Controller
     public function dashboard(): View
     {
         // Obtenga todas las solicitudes donde el user_id es igual al id del usuario autenticado
-        $solicitudes_p = SolicitudP::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
-        $solicitudes_d = SolicitudD::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
+        $solicitudes = Solicitud::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
 
         // Devuelve la vista docente.dashboard con las variables solicitudes_d y solicitudes_p
         return view(
             'docente.dashboard',
-            compact('solicitudes_d', 'solicitudes_p')
+            compact('solicitudes')
         );
     }
 
@@ -74,13 +72,14 @@ class DocenteController extends Controller
             // 'Observaciones' => 'required',
         ]);
 
-        // Obtiene el período actual
+        // Obtiene el período
         $periodo = Periodo::where('fecha_inicio', '<=', $request->Fecha)
             ->where('fecha_fin', '>=', $request->Fecha)
             ->first();
 
         // Crea una nueva solicitud de días económicos
-        $solicitud = SolicitudD::create([
+        $solicitud = Solicitud::create([
+            'tipo_solicitud' => 'dias_economicos',
             'Motivo' => $request->Motivo, // Motivo de la solicitud
             'FechaSolicitud' => date('Y-m-d'), // Fecha de creación de la solicitud
             'FechaSolicitada' => $request->Fecha, // Fecha solicitada
@@ -177,14 +176,15 @@ class DocenteController extends Controller
             // 'Observaciones' => 'required', // Observación de la solicitud (opcional)
         ]);
 
-        // Obtiene el período actual
+        // Obtiene el período
         $periodo = Periodo::where('fecha_inicio', '<=', $request->Fecha,)
             ->where('fecha_fin', '>=', $request->Fecha,)
             ->first();
 
 
         // Crea una nueva solicitud de pases de salida
-        $solicitud = SolicitudP::create([
+        $solicitud = Solicitud::create([
+            'tipo_solicitud' => 'pases_de_salida',
             'Motivo' => $request->Motivo,
             'FechaSolicitud' => date('Y-m-d'),
             'FechaSolicitada' => $request->Fecha,
@@ -253,10 +253,10 @@ class DocenteController extends Controller
     /**
      * Crea una vista para mostrar los detalles de una solicitud de días económicos.
      *
-     * @param SolicitudD $solicitud La solicitud de días económicos a mostrar.
+     * @param Solicitud $solicitud La solicitud de días económicos a mostrar.
      * @return View La vista de los detalles de la solicitud de días económicos.
      */
-    public function create_detalles_solicitud_d(SolicitudD $solicitud): View
+    public function create_detalles_solicitud_d(Solicitud $solicitud): View
     {
         // Retorna la vista de los detalles de la solicitud de días económicos, pasando la solicitud como variable compact.
         return view('docente.detalles_solicitud_dias_ecoconimicos', compact('solicitud'));
@@ -267,10 +267,10 @@ class DocenteController extends Controller
     /**
      * Crea una vista para mostrar los detalles de una solicitud de pases de salida.
      *
-     * @param SolicitudP $solicitud La solicitud de pases de salida a mostrar.
+     * @param Solicitud $solicitud La solicitud de pases de salida a mostrar.
      * @return View La vista de los detalles de la solicitud de pases de salida.
      */
-    public function create_detalles_solicitud_p(SolicitudP $solicitud): View
+    public function create_detalles_solicitud_p(Solicitud $solicitud): View
     {
         // Retorna la vista de los detalles de la solicitud de pases de salida, pasando la solicitud como variable compact.
         return view('docente.detalles_solicitud_pases_de_salida', compact('solicitud'));

@@ -13,8 +13,6 @@
                             href="{{ route('cordinador.dashboard') }}"
                         @elseif(Auth::user()->puesto->Descripcion == 'Administrador')
                             href="{{ route('administrador.dashboard') }}"
-                        @elseif(Auth::user()->puesto->Descripcion == 'Director')
-                            href="{{ route('director.dashboard') }}"
                         @elseif(Auth::user()->puesto->Descripcion == 'SubDirector')
                             href="{{ route('subdirector.dashboard') }}"
                         @endif
@@ -78,13 +76,6 @@
 
                         <x-nav-link :href="route('administrador.periodos.create')" :active="request()->routeIs('administrador.periodos.create')">
                             {{ __('Nuevo Periodo') }}
-                        </x-nav-link>
-                    @endif
-
-                    {{-- Director --}}
-                    @if(Auth::user()->puesto->Descripcion == 'Director')
-                        <x-nav-link :href="route('director.dashboard')" :active="request()->routeIs('director.dashboard')">
-                            {{ __('Solicitudes') }}
                         </x-nav-link>
                     @endif
 
@@ -172,7 +163,6 @@
                     {{ __('Solicitar Permiso Para Un Pase de Salida') }}
                 </x-responsive-nav-link>
             @endif
-
             {{-- Cordinador --}}
             @if(Auth::user()->puesto->Descripcion == 'Cordinador')
                 <x-responsive-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
@@ -200,12 +190,6 @@
 
                 <x-responsive-nav-link :href="route('administrador.periodos.create')" :active="request()->routeIs('administrador.periodos.create')">
                     {{ __('Nuevo Periodo') }}
-                </x-responsive-nav-link>
-            @endif
-            {{-- Director --}}
-            @if(Auth::user()->puesto->Descripcion == 'Director')
-                <x-responsive-nav-link :href="route('director.dashboard')" :active="request()->routeIs('director.dashboard')">
-                    {{ __('Solicitudes') }}
                 </x-responsive-nav-link>
             @endif
             {{-- SubDirector --}}

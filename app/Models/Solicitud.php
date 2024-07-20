@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SolicitudP extends Model
+class Solicitud extends Model
 {
     use HasFactory;
 
-    protected $table = "solicitud_pases_de_salida";
+    protected $table = "solicituds";
 
     protected $fillable = [
         'Motivo',
+        'tipo_solicitud',
         'FechaSolicitud',
         'FechaSolicitada',
         'HoraSolicitada',
@@ -39,8 +40,6 @@ class SolicitudP extends Model
         // Retorna el usuario que ha realizado la solicitud de pase de salida.
         return $this->belongsTo(User::class);
     }
-
-
 
     /**
      * Relación uno a muchos con la tabla de periodos.

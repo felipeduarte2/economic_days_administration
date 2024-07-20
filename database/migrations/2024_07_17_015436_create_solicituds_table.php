@@ -9,14 +9,17 @@ return new class extends Migration
     /**
      * Ejecuta las migraciones.
      *
-     * Crea la tabla solicitud_pases_de_salida con las columnas necesarias para
+     * Crea la tabla solicituds con las columnas necesarias para
      * almacenar la información de las solicitudes de permisos para pases de salida.
      */
     public function up(): void
     {
-        Schema::create('solicitud_pases_de_salida', function (Blueprint $table) {
+        Schema::create('solicituds', function (Blueprint $table) {
             // ID de la solicitud
             $table->id();
+
+            // tipos de solicitud 
+            $table->string('tipo_solicitud', 20);
 
             // Motivo de la solicitud
             $table->string('Motivo', 100);
@@ -26,7 +29,7 @@ return new class extends Migration
 
             // Fecha y hora solicitadas
             $table->dateTime('FechaSolicitada');
-            $table->time('HoraSolicitada');
+            $table->time('HoraSolicitada')->nullable();
 
             // Validaciones
             $table->boolean('Validacion1')->nullable();
@@ -54,23 +57,15 @@ return new class extends Migration
             $table->unsignedBigInteger('IdPeriodo');
             // Relación con la tabla periodos
             $table->foreign('IdPeriodo')->references('IdPeriodo')->on('periodos');
-
-            // Timestamps
             $table->timestamps();
         });
     }
 
-
-
-
     /**
-     * Deshace las migraciones.
-     *
-     * Elimina la tabla solicitud_pases_de_salida si existe.
+     * Reverse the migrations.
      */
     public function down(): void
     {
-        // Elimina la tabla 'solicitud_pases_de_salida' si existe
-        Schema::dropIfExists('solicitud_pases_de_salida');
+        Schema::dropIfExists('solicituds');
     }
 };

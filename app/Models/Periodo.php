@@ -15,19 +15,11 @@ class Periodo extends Model
         'fecha_fin',
     ];
 
-    // public function users()
-    // {
-    //     return $this->hasMany(User::class);
-    // }
-
-    public function solicitudes_d()
+    public function solicitudes()
     {
-        return $this->hasMany(SolicitudD::class);
+        return $this->hasMany(Solicitud::class);
     }
 
-    public function solicitudes_p()
-    {
-        return $this->hasMany(SolicitudP::class);
-    }
+
 
 }

@@ -7,12 +7,12 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SolicitudP>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Solicitud>
  */
-class SolicitudPFactory extends Factory
+class SolicitudFactory extends Factory
 {
     /**
-     * Defina el estado predeterminado del modelo.
+     * Define the model's default state.
      *
      * @return array<string, mixed>
      */
@@ -20,6 +20,7 @@ class SolicitudPFactory extends Factory
     {
         return [
             'Motivo' => fake()->sentence(),
+            'tipo_solicitud' => fake()->randomElement(['dias_economicos', 'pases_de_salida']),
             'FechaSolicitud' => now(),
             'FechaSolicitada' => fake()->dateTimeBetween('now', '6 months'), 
             'HoraSolicitada' => fake()->time(),
