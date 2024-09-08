@@ -1,6 +1,5 @@
 <?php
 
-// use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Backend\AdministradorController;
 use App\Http\Controllers\Backend\CordinadorController;
 use App\Http\Controllers\Backend\DocenteController;
@@ -13,15 +12,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    // return view('dashboard');
-    // que sea un RedirectResponse
     if(auth()->user()->puesto->Descripcion === 'Docente') return redirect()->route('docente.dashboard');
     if(auth()->user()->puesto->Descripcion === 'Administrador') return redirect()->route('administrador.dashboard');
     if(auth()->user()->puesto->Descripcion === 'Cordinador') return redirect()->route('cordinador.dashboard');
     if(auth()->user()->puesto->Descripcion === 'SubDirector') return redirect()->route('subdirector.dashboard');
     if(auth()->user()->puesto->Descripcion === 'Director') return redirect()->route('director.dashboard');
-    // return redirect()->route('dashboard');
-
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

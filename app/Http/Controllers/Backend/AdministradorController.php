@@ -44,7 +44,7 @@ class AdministradorController extends Controller
             'ApellidoP' => ['required', 'string', 'max:255'],
             'ApellidoM' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'IdPuesto' => ['required', new DirectorRule, new SubDirectorRule],
+            'IdPuesto' => ['required', new SubDirectorRule],
             'IdDepartamento' => ['required', new CordinadorRule],
         ]);
 
@@ -83,7 +83,7 @@ class AdministradorController extends Controller
             'ApellidoM' => ['required', 'string', 'max:255'],
             'status' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'IdPuesto' => ['required', new DirectorRule, new SubDirectorRule],
+            'IdPuesto' => ['required', new SubDirectorRule],
             'IdDepartamento' => ['required', new CordinadorRule],
         ]);
 
