@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             
             // Crear la columna 'email_verified_at' para almacenar el tiempo de verificación del correo electrónico
-            $table->timestamp('email_verified_at');
+            $table->timestamp('email_verified_at')->nullable();
             
             // Crear la columna 'password' para almacenar la contraseña
             $table->string('password');
