@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             'ApellidoM' => 'Admin',
             'Codigo_empleado' => '000000',
             'email' => 'test@example.com',
+            'email_verified_at' => now(),
             'password' => bcrypt('000000'),
             'status' => 'Activo',
             'IdDepartamento' => 1,
