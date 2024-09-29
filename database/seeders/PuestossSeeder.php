@@ -21,7 +21,7 @@ class PuestossSeeder extends Seeder
             'Descripcion' => 'SubDirector',
         ]);
         DB::table('puestos')->insert([
-            'Descripcion' => 'Cordinador',
+            'Descripcion' => 'Coordinador',
         ]);
         DB::table('puestos')->insert([
             'Descripcion' => 'Docente',

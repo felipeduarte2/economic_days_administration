@@ -3,7 +3,6 @@
 namespace App\Rules;
 
 use App\Models\Periodo;
-use App\Models\SolicitudD;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;

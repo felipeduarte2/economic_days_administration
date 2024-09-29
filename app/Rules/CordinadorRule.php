@@ -41,16 +41,16 @@ class CordinadorRule implements DataAwareRule, ValidationRule
         // Verificar si el atributo id está establecido
         if (isset($this->data['id'])) {
             // Consultar el usuario con el puesto como coordinador, departamento igual al valor de entrada y id diferente al id del usuario actual
-            $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Cordinador'))
+            $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Coordinador'))
             ->where('status', 'Activo')->where('IdDepartamento', $value)->where('id', '!=', $this->data['id'])->first();
         }else{
             // Consultar el usuario con el puesto como coordinador y departamento igual al valor de entrada
-            $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Cordinador'))
+            $cordinador = User::whereHas('puesto', fn ($query) => $query->where('Descripcion', 'Coordinador'))
             ->where('status', 'Activo')->where('IdDepartamento', $value)->first();
         }
 
         // Verificar si el puesto es coordinador y existe un coordinador en el departamento
-        if ($puesto->Descripcion == 'Cordinador' && $cordinador) {
+        if ($puesto->Descripcion == 'Coordinador' && $cordinador) {
             // Obtener el nombre del departamento en minúsculas
             $departamento = strtolower($cordinador->departamento->Descripcion);
             // Llamar al fallback y mostrar el mensaje de error

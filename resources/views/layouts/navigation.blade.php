@@ -9,7 +9,7 @@
                     <a 
                         @if(Auth::user()->puesto->Descripcion == 'Docente')
                             href="{{ route('docente.dashboard') }}"
-                        @elseif(Auth::user()->puesto->Descripcion == 'Cordinador')
+                        @elseif(Auth::user()->puesto->Descripcion == 'Coordinador')
                             href="{{ route('cordinador.dashboard') }}"
                         @elseif(Auth::user()->puesto->Descripcion == 'Administrador')
                             href="{{ route('administrador.dashboard') }}"
@@ -49,7 +49,7 @@
                     @endif
 
                     {{-- Cordinador --}}
-                    @if(Auth::user()->puesto->Descripcion == 'Cordinador')
+                    @if(Auth::user()->puesto->Descripcion == 'Coordinador')
                         <x-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
                             {{ __('Solicitudes') }}
                         </x-nav-link>
@@ -97,7 +97,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->Nombre . ' ' . Auth::user()->ApellidoP . ' ' . Auth::user()->ApellidoM}}</div>
+                            <div>{{ Auth::user()->Nombre . ' ' . Auth::user()->ApellidoP}}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -164,7 +164,7 @@
                 </x-responsive-nav-link>
             @endif
             {{-- Cordinador --}}
-            @if(Auth::user()->puesto->Descripcion == 'Cordinador')
+            @if(Auth::user()->puesto->Descripcion == 'Coordinador')
                 <x-responsive-nav-link :href="route('cordinador.dashboard')" :active="request()->routeIs('cordinador.dashboard')">
                     {{ __('Solicitudes') }}
                 </x-responsive-nav-link>

@@ -22,7 +22,7 @@ class Cordinador
     public function handle(Request $request, Closure $next): Response
     {
         // Verificar si el usuario autenticado es coordinador
-        if (auth()->user()->puesto->Descripcion == 'Cordinador') {
+        if (auth()->user()->puesto->Descripcion == 'Coordinador') {
             // Si es coordinador, pasar la solicitud a la siguiente capa de middleware
             return $next($request);
         }

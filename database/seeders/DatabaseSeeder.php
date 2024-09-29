@@ -27,9 +27,13 @@ class DatabaseSeeder extends Seeder
 
         Solicitud::factory(50)->Create();
 
-        // SolicitudD::factory(10)->Create();
+        DB::table('departamentos')->insert([
+            'Descripcion' => 'SUBDIRECTOR',
+        ]);
 
-        // SolicitudP::factory(10)->Create();
+        DB::table('departamentos')->insert([
+            'Descripcion' => 'ADMINISTRADOR',
+        ]);
 
         DB::table('users')->insert([
             'Nombre' => 'Admin',
@@ -37,11 +41,38 @@ class DatabaseSeeder extends Seeder
             'ApellidoM' => 'Admin',
             'Codigo_empleado' => '000000',
             'email' => 'test@example.com',
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
             'password' => bcrypt('000000'),
             'status' => 'Activo',
-            'IdDepartamento' => 1,
+            'IdDepartamento' => 8,
             'IdPuesto' => 1,
         ]);
+
+        // DB::table('users')->insert([
+        //     'Nombre' => 'Cordi',
+        //     'ApellidoP' => 'Cordi',
+        //     'ApellidoM' => 'Cordi',
+        //     'Codigo_empleado' => '444444',
+        //     'email' => 'test@example2.com',
+        //     // 'email_verified_at' => now(),
+        //     'password' => bcrypt('444444'),
+        //     'status' => 'Activo',
+        //     'IdDepartamento' => 5,
+        //     'IdPuesto' => 3,
+        // ]);
+
+        // DB::table('users')->insert([
+        //     'Nombre' => 'Sub',
+        //     'ApellidoP' => 'Direct',
+        //     'ApellidoM' => 'Direct',
+        //     'Codigo_empleado' => '888888',
+        //     'email' => 'test@example3.com',
+        //     // 'email_verified_at' => now(),
+        //     'password' => bcrypt('888888'),
+        //     'status' => 'Activo',
+        //     'IdDepartamento' => 7,
+        //     'IdPuesto' => 2,
+        // ]);
+
     }
 }

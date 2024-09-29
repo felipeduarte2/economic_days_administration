@@ -51,7 +51,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         // Cordinador
-        elseif($request->user()->puesto->Descripcion === 'Cordinador'){
+        elseif($request->user()->puesto->Descripcion === 'Coordinador'){
             return redirect()->intended(route('cordinador.dashboard', absolute: false));
         }
 
