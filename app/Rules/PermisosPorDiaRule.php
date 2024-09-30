@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\Solicitud;
 use App\Models\SolicitudD;
 use Carbon\Carbon;
 use Closure;
@@ -30,7 +31,9 @@ class PermisosPorDiaRule implements ValidationRule
         $value = Carbon::parse($value)->format('Y-m-d');
 
         // Consultar todas las solicitudes donde FechaSolicitada sea igual a $value
-        $solicitudes = SolicitudD::where('FechaSolicitada', $value)->get();
+        $solicitudes = Solicitud::where('FechaSolicitada', $value)->
+        where('tipo_solicitud', 'dias_economicos')->
+        get(); //
 
         // Si hay más de tres solicitudes, mostrar un mensaje de error
         if ($solicitudes->count() >= 3) {

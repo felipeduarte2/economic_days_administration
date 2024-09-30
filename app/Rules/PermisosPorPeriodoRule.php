@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use App\Models\Periodo;
-use App\Models\SolicitudD;
+use App\Models\Solicitud;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -40,8 +40,9 @@ class PermisosPorPeriodoRule implements ValidationRule
             // $fail('No se encontró un día válido para la fecha');
 
             // Consultar todas las solicitudes del usuario para ese período
-            $solicitudes = SolicitudD::where('user_id', auth()->user()->id)
+            $solicitudes = Solicitud::where('user_id', auth()->user()->id)
             ->where('IdPeriodo', $periodo->IdPeriodo)
+            ->where('tipo_solicitud', 'dias_economicos')
             ->get();
 
             // Si hay más de tres solicitudes, mostrar un mensaje de error
