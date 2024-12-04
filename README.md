@@ -21,7 +21,7 @@ Este proyecto es una **aplicación web** desarrollada en **Laravel** que permite
 
 ## ⚙️ Tecnologías utilizadas
 
-- **Backend**: Laravel 9, Breeze (autenticación), Eloquent ORM.
+- **Backend**: Laravel 11, Breeze (autenticación), Eloquent ORM.
 - **Frontend**: TailwindCSS.
 - **Base de datos**: MySQL.
 - **Notificaciones**: Sistema integrado de correos electrónicos de Laravel.
@@ -31,7 +31,7 @@ Este proyecto es una **aplicación web** desarrollada en **Laravel** que permite
 ## 📂 Instalación
 
 ### Requisitos previos
-- PHP >= 8.0
+- PHP >= 8.2
 - Composer
 - MySQL
 - Node.js & npm
